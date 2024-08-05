@@ -151,11 +151,41 @@ public class Main {
 		return vehicleDAO.getVehiclesByVehicleType(vehicleType);
 	}
 	
+	public static void createVehicle(Vehicle vehicle) {
+		VehicleDAO vehicleDAO = new VehicleDAOImplementation();
+		
+		boolean isCreated = vehicleDAO.create(vehicle);
+		
+		if(isCreated) System.out.println("Vehicle Created Successfully");
+		else System.out.println("Vehicle Not Created");
+	}
+	
+	public static void updateVehicle(Vehicle vehicle) {
+		VehicleDAO vehicleDAO = new VehicleDAOImplementation();
+		
+		boolean isUpdated = vehicleDAO.update(vehicle);
+		
+		if(isUpdated) System.out.println("Vehicle Updated Successfully");
+		else System.out.println("Vehicle Not Updated");
+	}
+	
+	public static void deleteVehicle(int vehicleId) {
+		VehicleDAO vehicleDAO = new VehicleDAOImplementation();
+
+		boolean isDeleted = vehicleDAO.delete(vehicleId);
+		
+		if(isDeleted) System.out.println("Vehicle Deleted Successfully");
+		else System.out.println("Vehicle not deleted");
+	}
+	
 	public static void main(String[] args) {
 //		updateUser(new User(1 , null, "Sundar", null, null, null, null, null, null, null, null, null, null, null ));
 //		login("khabilansomasundar@gmail.com" , "Acere2200hq$");
 //		System.out.println(getVehicleById(1));
 //		System.out.println(getVehicleTypes());
 //		System.out.println(getVehiclesByVehicleType("Sedan"));
+//		createVehicle(new Vehicle(1 , "Maruti" , "Sedan" , (double) 115643 , (double) 134653));
+//		updateVehicle(new Vehicle(86 , "Maruti" , "Sedan" , (double) 1156430 , (double) 1346530));
+//		deleteVehicle(86);
 	}
 }
