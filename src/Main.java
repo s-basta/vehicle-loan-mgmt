@@ -8,6 +8,9 @@ import constants.Gender;
 import dao.user.User;
 import dao.user.UserDAO;
 import dao.user.UserDAOImplementation;
+import dao.vehicle.Vehicle;
+import dao.vehicle.VehicleDAO;
+import dao.vehicle.VehicleDAOImplementation;
 import utils.Utility;
 
 public class Main {
@@ -130,8 +133,29 @@ public class Main {
 		else System.out.println("Invalid User Credentials");		
 	}
 	
+	public static Vehicle getVehicleById(int vehicleId) {
+		VehicleDAO vehicleDAO = new VehicleDAOImplementation();
+		
+		return vehicleDAO.getByVehicleId(vehicleId);
+	}
+	
+	public static List<String> getVehicleTypes() {
+		VehicleDAO vehicleDAO = new VehicleDAOImplementation();
+		
+		return vehicleDAO.getVehicleType();
+	}
+	
+	public static List<Vehicle> getVehiclesByVehicleType(String vehicleType) {
+		VehicleDAO vehicleDAO = new VehicleDAOImplementation();
+		
+		return vehicleDAO.getVehiclesByVehicleType(vehicleType);
+	}
+	
 	public static void main(String[] args) {
 //		updateUser(new User(1 , null, "Sundar", null, null, null, null, null, null, null, null, null, null, null ));
-		login("khabilansomasundar@gmail.com" , "Acere2200hq$");
+//		login("khabilansomasundar@gmail.com" , "Acere2200hq$");
+//		System.out.println(getVehicleById(1));
+//		System.out.println(getVehicleTypes());
+//		System.out.println(getVehiclesByVehicleType("Sedan"));
 	}
 }
