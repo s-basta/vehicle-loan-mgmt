@@ -1,1 +1,4 @@
 bin/
+.metadata
+module.info
+.classpath
