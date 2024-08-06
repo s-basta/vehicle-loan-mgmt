@@ -1,13 +1,13 @@
 package dao.vehicle;
 
 public class Vehicle {
-	int vehicleId;
+	Integer vehicleId;
 	String vehicleMake;
 	String vehicleType;
-	double exShowroomPrice;
-	double onRoadPrice;
+	Double exShowroomPrice;
+	Double onRoadPrice;
 	
-	public Vehicle(int vehicleId, String vehicleMake, String vehicleType, double exShowroomPrice, double onRoadPrice) {
+	public Vehicle(Integer vehicleId, String vehicleMake, String vehicleType, Double exShowroomPrice, Double onRoadPrice) {
 		super();
 		this.vehicleId = vehicleId;
 		this.vehicleMake = vehicleMake;
@@ -16,7 +16,7 @@ public class Vehicle {
 		this.onRoadPrice = onRoadPrice;
 	}
 
-	public int getVehicleId() {
+	public Integer getVehicleId() {
 		return vehicleId;
 	}
 
@@ -40,19 +40,19 @@ public class Vehicle {
 		this.vehicleType = vehicleType;
 	}
 
-	public double getExShowroomPrice() {
+	public Double getExShowroomPrice() {
 		return exShowroomPrice;
 	}
 
-	public void setExShowroomPrice(double exShowroomPrice) {
+	public void setExShowroomPrice(Double exShowroomPrice) {
 		this.exShowroomPrice = exShowroomPrice;
 	}
 
-	public double getOnRoadPrice() {
+	public Double getOnRoadPrice() {
 		return onRoadPrice;
 	}
 
-	public void setOnRoadPrice(double onRoadPrice) {
+	public void setOnRoadPrice(Double onRoadPrice) {
 		this.onRoadPrice = onRoadPrice;
 	}
 
