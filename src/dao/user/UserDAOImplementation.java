@@ -39,7 +39,7 @@ public class UserDAOImplementation implements UserDAO{
 	@Override
 	public boolean create(User user) {
 		try {
-			String sql = "INSERT INTO `vloanUser` (" +
+			String sql = "INSERT INTO `User` (" +
 	                "`firstName`, `lastName`, `dateOfBirth`, `gender`, `username`, `email`, `mobile`, " +
 	                "`password`, `isAdmin`, `typeOfEmployment`, `salary`, `panCardNumber`, `aadharNumber`) " +
 	                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -82,7 +82,7 @@ public class UserDAOImplementation implements UserDAO{
 
 		try {
 			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("select * from vloanUser where userid=" + userId);
+			ResultSet result = statement.executeQuery("select * from User where userid=" + userId);
 			if(result.next()) {
 				 user = resultSetToUserConvertor(result);
 			}
@@ -98,7 +98,7 @@ public class UserDAOImplementation implements UserDAO{
 
 		try {
 			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("select * from vloanUser where username like '" + username + "'");
+			ResultSet result = statement.executeQuery("select * from User where username like '" + username + "'");
 			if(result.next()) {
 				 user = resultSetToUserConvertor(result);
 			}
@@ -115,7 +115,7 @@ public class UserDAOImplementation implements UserDAO{
 
 		try {
 			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("select * from vloanUser where email like '" + email + "'");
+			ResultSet result = statement.executeQuery("select * from User where email like '" + email + "'");
 			if(result.next()) {
 				 user = resultSetToUserConvertor(result);
 			}
@@ -133,7 +133,7 @@ public class UserDAOImplementation implements UserDAO{
 		
 		try {
 			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("select * from vloanUser");
+			ResultSet result = statement.executeQuery("select * from User");
 			
 			while(result.next()) {
 				user = resultSetToUserConvertor(result);
@@ -212,7 +212,7 @@ public class UserDAOImplementation implements UserDAO{
             throw new IllegalArgumentException("No fields to update");
         }
 
-        String sql = "UPDATE `vloanuser` SET " + String.join(", ", setClauses) + " WHERE userId = ?";
+        String sql = "UPDATE `User` SET " + String.join(", ", setClauses) + " WHERE userId = ?";
         parameters.add(user.getUserId());
 
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
