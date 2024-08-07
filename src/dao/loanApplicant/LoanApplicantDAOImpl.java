@@ -20,7 +20,7 @@ public class LoanApplicantDAOImpl implements LoanApplicantDAO {
 			System.out.println("Driver registered....");
 
 			System.out.println("Trying to connect to the DB");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/project", "root", "root123");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vehicle_loan", "root", "@Cricket1603");
 			System.out.println("Connected to the DB : " + conn);
 		} catch (Exception e) {
 			System.out.println("Problem : " + e);

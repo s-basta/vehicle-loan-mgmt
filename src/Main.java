@@ -1,10 +1,17 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import constants.Gender;
+import dao.acc.AcceptedLoan;
+import dao.acc.AcceptedLoansDAO;
+import dao.acc.AcceptedLoansDAOImpl;
+import dao.status.LoanStatus;
+import dao.status.LoanStatusDAO;
+import dao.status.LoanStatusDAOImpl;
 import dao.loanApplicant.LoanApplicant;
 import dao.loanApplicant.LoanApplicantDAO;
 import dao.loanApplicant.LoanApplicantDAOImpl;
@@ -290,32 +297,178 @@ public class Main {
 		}
 	}
 
+	// Methods for AcceptedLoans
+	public static void createAcceptedLoan(AcceptedLoan acceptedLoan) {
+	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
+
+	    // Directly call the insert method in DAO
+	    acceptedLoansDAO.insertAcceptedLoan(acceptedLoan);
+	    System.out.println("Accepted Loan Created Successfully");
+	}
+
+	public static void getAcceptedLoanById(int id) {
+	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
+	    AcceptedLoan acceptedLoan = acceptedLoansDAO.getAcceptedLoanById(id);
+
+	    if (acceptedLoan != null) {
+	        System.out.println("Accepted Loan Details:");
+	        System.out.println("Loan ID: " + acceptedLoan.getLoanID());
+	        System.out.println("Application ID: " + acceptedLoan.getApplicationID());
+	        System.out.println("User ID: " + acceptedLoan.getUserID());
+	        System.out.println("EMI Amount: " + acceptedLoan.getEmiAmount());
+	        System.out.println("Total EMIs: " + acceptedLoan.getTotalEMIs());
+	        System.out.println("Paid EMIs: " + acceptedLoan.getPaidEMIs());
+	        System.out.println("Loan Start Date: " + acceptedLoan.getLoanStartDate());
+	        System.out.println("Loan End Date: " + acceptedLoan.getLoanEndDate());
+	    } else {
+	        System.out.println("Accepted Loan not found for Loan ID: " + id);
+	    }
+	}
+
+	public static void getAllAcceptedLoans() {
+	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
+	    List<AcceptedLoan> acceptedLoans = acceptedLoansDAO.getAllAcceptedLoans();
+
+	    for (AcceptedLoan acceptedLoan : acceptedLoans) {
+	        System.out.println(acceptedLoan);
+	    }
+	}
+
+	public static void updateAcceptedLoan(int id, AcceptedLoan newAcceptedLoan) {
+	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
+	    AcceptedLoan existingAcceptedLoan = acceptedLoansDAO.getAcceptedLoanById(id);
+
+	    if (existingAcceptedLoan != null) {
+	        // Call update method in DAO
+	        acceptedLoansDAO.updateAcceptedLoan(newAcceptedLoan);
+	        System.out.println("Accepted Loan record updated successfully.");
+	    } else {
+	        System.out.println("Accepted Loan record not found.");
+	    }
+	}
+
+	public static void deleteAcceptedLoan(int id) {
+	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
+	    AcceptedLoan existingAcceptedLoan = acceptedLoansDAO.getAcceptedLoanById(id);
+
+	    if (existingAcceptedLoan != null) {
+	        // Call delete method in DAO
+	        acceptedLoansDAO.deleteAcceptedLoan(id);
+	        System.out.println("Accepted Loan record deleted successfully.");
+	    } else {
+	        System.out.println("Accepted Loan record not found.");
+	    }
+	}
+	
+	
+	// Create Loan Status
+	public static void createLoanStatus(LoanStatus loanStatus) {
+	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
+	    loanStatusDAO.insertLoanStatus(loanStatus);
+	    System.out.println("Loan Status Created Successfully");
+	}
+
+	// Get Loan Status by ID
+	public static void getLoanStatusById(int id) {
+	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
+	    LoanStatus loanStatus = loanStatusDAO.getLoanStatusById(id);
+
+	    if (loanStatus != null) {
+	        System.out.println("Loan Status Details:");
+	        System.out.println("Status ID: " + loanStatus.getStatusID());
+	        System.out.println("Loan ID: " + loanStatus.getLoanID());
+	        System.out.println("Current EMI: " + loanStatus.getCurrentEMI());
+	        System.out.println("Payment Status: " + loanStatus.getPaymentStatus());
+	        System.out.println("Payment Date: " + loanStatus.getPaymentDate());
+	    } else {
+	        System.out.println("Loan Status not found for Status ID: " + id);
+	    }
+	}
+
+	// Get All Loan Statuses
+	public static void getAllLoanStatuses() {
+	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
+	    List<LoanStatus> loanStatuses = loanStatusDAO.getAllLoanStatuses();
+
+	    for (LoanStatus loanStatus : loanStatuses) {
+	        System.out.println(loanStatus);
+	    }
+	}
+
+	// Update Loan Status
+	public static void updateLoanStatus(LoanStatus loanStatus) {
+	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
+	    loanStatusDAO.updateLoanStatus(loanStatus);
+	    System.out.println("Loan Status Updated Successfully");
+	}
+
+	// Delete Loan Status
+	public static void deleteLoanStatus(int id) {
+	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
+	    loanStatusDAO.deleteLoanStatus(id);
+	    System.out.println("Loan Status Deleted Successfully");
+	}
+
+
+
+
 	public static void main(String[] args) {
 		// Meet
-//		LoanApplicant loanApplicant = new LoanApplicant(1, 1, // ApplicationID will be auto-incremented
-//				"Santro", // CarMake
-//				"Camry", // CarModel
-//				254000.00, // ExShowroomPrice
-//				30000.00, // OnRoadPrice
-//				"Salaried", // TypeOfEmployment
-//				50000.00, // YearlySalary
-//				"1234567890", // MobileNumber
-//				"example@example.com", // EmailID
-//				"1234", // HouseNumber
-//				"Example Street", // StreetName
-//				"Example City", // City
-//				"Example State", // State
-//				"123456", // PinCode
-//				20000.00, // LoanAmount
-//				60, // LoanTenure
-//				7.5, // RateOfInterest
-//				"123412341234", // AadharNumber
-//				"ABC1234567");
+		LoanApplicant loanApplicant = new LoanApplicant(1, 1, // ApplicationID will be auto-incremented
+				"Santro", // CarMake
+				"Camry", // CarModel
+				254000.00, // ExShowroomPrice
+				30000.00, // OnRoadPrice
+				"Salaried", // TypeOfEmployment
+				50000.00, // YearlySalary
+				"1234567890", // MobileNumber
+				"example@example.com", // EmailID
+				"1234", // HouseNumber
+				"Example Street", // StreetName
+				"Example City", // City
+				"Example State", // State
+				"123456", // PinCode
+				20000.00, // LoanAmount
+				60, // LoanTenure
+				7.5, // RateOfInterest
+				"123412341234", // AadharNumber
+				"ABC1234567");
 //		createLoan(loanApplicant);
 //		getLoanById(1);
 //		getAllLoans();
 //		updateLoan(1, loanApplicant);
 //		deleteLoanApplicant(3);
+		
+		
+		
+		// Prateek
+	
+		// 1) Example for AcceptedLoans
+//		AcceptedLoan acceptedLoan = new AcceptedLoan(7, 1, 2, 5000,	12,	3, new Date(), new Date()); // LoanStartDate
+//		createAcceptedLoan(acceptedLoan);
+//		getAcceptedLoanById(1);
+//		getAllAcceptedLoans();
+//		updateAcceptedLoan(1, acceptedLoan);
+//		deleteAcceptedLoan(1);
+		
+		
+//		2) Example for LoanStatus
+//		LoanStatus loanStatus = new LoanStatus(1, 0, 0, "Pending", new Date());
+//        createLoanStatus(loanStatus);
+//        getLoanStatusById(1);
+//        getAllLoanStatuses();
+
+//        // Example update of LoanStatus
+//        loanStatus.setPaymentStatus("Approved");
+//        updateLoanStatus(loanStatus);
+//
+//        // Example delete of LoanStatus
+//        deleteLoanStatus(2);
+//
+//        // Continue with other functionalities as needed
+//        registerUser();
+//        showUsers();
+//        // Add other method calls as needed for testing
 		
 		
 		

@@ -239,4 +239,16 @@ public class LoanApplicant {
     public void setApplicationDate(Date applicationDate) {
         this.applicationDate = applicationDate;
     }
+
+	@Override
+	public String toString() {
+		return "LoanApplicant [applicationID=" + applicationID + ", userID=" + userID + ", carMake=" + carMake
+				+ ", carModel=" + carModel + ", exShowroomPrice=" + exShowroomPrice + ", onRoadPrice=" + onRoadPrice
+				+ ", typeOfEmployment=" + typeOfEmployment + ", yearlySalary=" + yearlySalary + ", existingEMI="
+				+ existingEMI + ", mobileNumber=" + mobileNumber + ", emailID=" + emailID + ", houseNumber="
+				+ houseNumber + ", streetName=" + streetName + ", city=" + city + ", state=" + state + ", pinCode="
+				+ pinCode + ", loanAmount=" + loanAmount + ", loanTenure=" + loanTenure + ", rateOfInterest="
+				+ rateOfInterest + ", aadharNumber=" + aadharNumber + ", panCard=" + panCard + ", loanStatus="
+				+ loanStatus + ", applicationDate=" + applicationDate + "]";
+	}
 }
