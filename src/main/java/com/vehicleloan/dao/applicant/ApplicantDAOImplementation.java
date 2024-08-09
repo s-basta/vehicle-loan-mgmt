@@ -12,54 +12,64 @@ import org.springframework.stereotype.Service;
 
 import com.vehicleloan.config.Database;
 import com.vehicleloan.constant.LoanStatus;
+import com.vehicleloan.constant.PaymentStatus;
 import com.vehicleloan.constant.TypeOfEmployment;
+import com.vehicleloan.dao.acceptedLoan.AcceptedLoan;
+import com.vehicleloan.dao.acceptedLoan.AcceptedLoanDAO;
+import com.vehicleloan.dao.emiStatus.EMIStatus;
+import com.vehicleloan.dao.emiStatus.EMIStatusDAO;
 import com.vehicleloan.dao.user.User;
 import com.vehicleloan.dao.user.UserDAO;
+import com.vehicleloan.utils.DateUtils;
 
 @Service
 public class ApplicantDAOImplementation implements ApplicantDAO {
-	private Connection conn;
-	private UserDAO userDAO;
-	
-    public ApplicantDAOImplementation(UserDAO userDAO) {
+    private Connection conn;
+    private UserDAO userDAO;
+    private AcceptedLoanDAO acceptedLoanDAO;
+    private EMIStatusDAO emiStatusDAO;
+
+    public ApplicantDAOImplementation(UserDAO userDAO, AcceptedLoanDAO acceptedLoanDAO, EMIStatusDAO emiStatusDAO) {
         conn = Database.getConnection();
         this.userDAO = userDAO;
-	}
+        this.acceptedLoanDAO = acceptedLoanDAO;
+        this.emiStatusDAO = emiStatusDAO;
+    }
 
     private Applicant resultSetToApplicantConvertor(ResultSet result) throws SQLException {
         User user = userDAO.get(result.getInt("userID"));
 
-    	return new Applicant(
-            result.getInt("applicationID"),
-            result.getInt("userID"),
-            result.getString("vehicleMake"),
-            result.getString("vehicleType"),
-            result.getDouble("exShowroomPrice"),
-            result.getDouble("onRoadPrice"),
-            TypeOfEmployment.valueOf(result.getString("typeOfEmployment")),
-            result.getDouble("yearlySalary"),
-            result.getDouble("existingEMI"),
-            result.getString("mobileNumber"),
-            result.getString("emailID"),
-            result.getString("houseNumber"),
-            result.getString("streetName"),
-            result.getString("city"),
-            result.getString("state"),
-            result.getString("pinCode"),
-            result.getDouble("loanAmount"),
-            result.getInt("loanTenure"),
-            result.getDouble("rateOfInterest"),
-            LoanStatus.valueOf(result.getString("loanStatus")),
-            result.getDate("applicationDate"),
-            user.getPanCardNumber(),
-            user.getAadharNumber()
-        );
+        return new Applicant(
+                result.getInt("applicationID"),
+                result.getInt("userID"),
+                result.getString("vehicleMake"),
+                result.getString("vehicleType"),
+                result.getDouble("exShowroomPrice"),
+                result.getDouble("onRoadPrice"),
+                TypeOfEmployment.valueOf(result.getString("typeOfEmployment")),
+                result.getDouble("yearlySalary"),
+                result.getDouble("existingEMI"),
+                result.getString("mobileNumber"),
+                result.getString("emailID"),
+                result.getString("houseNumber"),
+                result.getString("streetName"),
+                result.getString("city"),
+                result.getString("state"),
+                result.getString("pinCode"),
+                result.getDouble("loanAmount"),
+                result.getInt("loanTenure"),
+                result.getDouble("rateOfInterest"),
+                LoanStatus.valueOf(result.getString("loanStatus")),
+                result.getDate("applicationDate"),
+                user.getPanCardNumber(),
+                user.getAadharNumber());
     }
 
     @Override
     public boolean create(Applicant applicant) {
-        String sql = "INSERT INTO vloanApplicant (userID, vehicleMake, vehicleType, exShowroomPrice, onRoadPrice, typeOfEmployment, yearlySalary, existingEMI, mobileNumber, emailID, houseNumber, streetName, city, state, pinCode, loanAmount, loanTenure, rateOfInterest, loanStatus, applicationDate) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vloanApplicant (userID, vehicleMake, vehicleType, exShowroomPrice, onRoadPrice, typeOfEmployment, yearlySalary, existingEMI, mobileNumber, emailID, houseNumber, streetName, city, state, pinCode, loanAmount, loanTenure, rateOfInterest, loanStatus, applicationDate) "
+                +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setInt(1, applicant.getUserID());
@@ -100,7 +110,7 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setInt(1, applicationID);
             ResultSet result = pst.executeQuery();
-            
+
             if (result.next()) {
                 applicant = resultSetToApplicantConvertor(result);
             }
@@ -112,19 +122,20 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
     }
 
     @Override
-    public List<Applicant> get(LoanStatus loanStatus , Integer userId) {
+    public List<Applicant> get(LoanStatus loanStatus, Integer userId) {
         List<Applicant> applicants = new ArrayList<>();
         String sql;
-        if(loanStatus != null && userId != null) {
-        	sql = "SELECT * FROM vloanApplicant where loanStatus like '" + loanStatus.name() + "'" + " and userId = " + userId;
-        }else if(loanStatus == null && userId != null) {
-        	sql = "SELECT * FROM vloanApplicant where userId = " + userId;
-        }else if(loanStatus != null && userId == null) {
-        	sql = "SELECT * FROM vloanApplicant where loanStatus like '" + loanStatus.name() + "'";
-        }else {
-        	sql = "SELECT * FROM vloanApplicant";
+        if (loanStatus != null && userId != null) {
+            sql = "SELECT * FROM vloanApplicant where loanStatus like '" + loanStatus.name() + "'" + " and userId = "
+                    + userId;
+        } else if (loanStatus == null && userId != null) {
+            sql = "SELECT * FROM vloanApplicant where userId = " + userId;
+        } else if (loanStatus != null && userId == null) {
+            sql = "SELECT * FROM vloanApplicant where loanStatus like '" + loanStatus.name() + "'";
+        } else {
+            sql = "SELECT * FROM vloanApplicant";
         }
-        
+
         try (PreparedStatement pst = conn.prepareStatement(sql); ResultSet result = pst.executeQuery()) {
             while (result.next()) {
                 applicants.add(resultSetToApplicantConvertor(result));
@@ -235,6 +246,30 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
             }
 
             int rows = pst.executeUpdate();
+            if (applicant.getLoanStatus() == LoanStatus.APPROVED) {
+                acceptedLoanDAO.delete(applicant.getApplicationID());
+                Applicant currentApplicant = get(applicant.getApplicationID());
+
+                acceptedLoanDAO.create(new AcceptedLoan(currentApplicant.getApplicationID(),
+                        currentApplicant.getLoanAmount() * (1 + (currentApplicant.getRateOfInterest() / 100))
+                                / (double) currentApplicant.getLoanTenure(),
+                        currentApplicant.getLoanTenure(),
+                        new java.util.Date(), DateUtils.addMonths(DateUtils.addMonths(new java.util.Date(), 1),
+                                currentApplicant.getLoanTenure() + 1)));
+
+                int numberOfEMIs = currentApplicant.getLoanTenure();
+                java.util.Date startDate = DateUtils.addMonths(new java.util.Date(), 1);
+
+                for (int month = 1; month <= numberOfEMIs; month++) {
+                    emiStatusDAO.create(
+                            new EMIStatus(null, currentApplicant.getApplicationID(), PaymentStatus.PENDING,
+                                    DateUtils.addMonths(startDate, month), null));
+                }
+
+            } else if (applicant.getLoanStatus() == LoanStatus.REJECTED) {
+                acceptedLoanDAO.delete(applicant.getApplicationID());
+            }
+
             return rows > 0;
         } catch (SQLException e) {
             e.printStackTrace();

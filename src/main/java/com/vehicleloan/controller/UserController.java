@@ -54,8 +54,9 @@ public class UserController {
 	public ResponseEntity<?> createUser(@RequestBody User newUser) {
 		boolean isCreated = userDAO.create(newUser);
 
-		if (isCreated)
+		if (!isCreated)
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

@@ -51,25 +51,6 @@ public class AcceptedLoanController {
 		return new ResponseEntity<List<AcceptedLoan>>(acceptedLoans, HttpStatus.OK);
 	}
 
-	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> createAcceptedLoan(@RequestBody AcceptedLoan acceptedLoan) {
-		boolean isCreated = acceptedLoanDAO.create(acceptedLoan);
-
-		if (isCreated) {
-			int numberOfEMIs = acceptedLoan.getTotalEMIs();
-			Date startDate = acceptedLoan.getLoanStartDate();
-
-			for (int month = 1; month <= numberOfEMIs; month++) {
-				emiStatusDAO.create(
-						new EMIStatus(null, acceptedLoan.getApplicationID(), PaymentStatus.PENDING, DateUtils.addMonths(startDate, month), null));
-			}
-
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		}
-
-		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-	}
-
 	@PutMapping()
 	public ResponseEntity<?> updateAcceptedLoan(@RequestBody AcceptedLoan acceptedLoan) {
 		boolean isUpdated = acceptedLoanDAO.update(acceptedLoan);
@@ -77,16 +58,5 @@ public class AcceptedLoanController {
 		if (isUpdated)
 			return new ResponseEntity<>(HttpStatus.OK);
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
-
-	@DeleteMapping("/{applicationId}")
-	public ResponseEntity<?> deleteAcceptedLoan(@PathVariable int applicationId) {
-		boolean isDeleted = acceptedLoanDAO.delete(applicationId);
-
-		if (isDeleted) {
-			emiStatusDAO.deleteByApplicationId(applicationId);
-			return new ResponseEntity<Object>(HttpStatus.OK);
-		}
-		return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 	}
 }
