@@ -54,7 +54,3 @@ Open `pom.xml` in your project and press `Ctrl + S` to trigger Maven to download
 Finally, run the project as a Spring Boot application:
 - Right-click on the project.
 - Select `Run As` > `Spring Boot App`.
-
----
-
-Feel free to adjust any specific details to better fit your project's setup.
