@@ -56,9 +56,18 @@ function logout() {
 }
 
 $(document).ready(function() {
+	// Retrieve userId from sessionStorage
+	    var userId = sessionStorage.getItem('userId');
+
+	    // Check if userId is available
+	    if (!userId) {
+	        console.error('User is not logged in. Redirecting to login page.');
+	        window.location.href = 'login.html'; // Redirect to login if no userId
+	        return;
+	    }
 	// Show the default page (e.g., dashboard)
 	$.ajax({
-		url: 'http://localhost:8080/api/v1/accepted-loan?userId=1', // Your API endpoint
+		url: 'http://localhost:8080/api/v1/accepted-loan?userId='+userId;, // Your API endpoint
 		type: 'GET',
 		success: function(response) {
 			var totalLoans = response.length; // Assuming the API returns an array of loans
@@ -87,10 +96,9 @@ $(document).ready(function() {
 		}
 	});
 
-
 	$('#installments_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/emi-status/user/1", // Replace with your API endpoint
+			"url": "/api/v1/emi-status/user/"+ userId, // Use dynamic userId
 			"type": "GET",
 			"dataSrc": function(json) {
 				json.forEach(function(item, index) {
@@ -181,7 +189,7 @@ $(document).ready(function() {
 	}); // Initialize DataTable
 
 	$.ajax({
-		url: "/api/v1/user/1",
+		url: "/api/v1/user/"+ userId, // Use dynamic userId,
 		type: 'GET',
 		success: function(response) {
 			// Assuming the response is an object containing user data

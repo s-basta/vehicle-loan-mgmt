@@ -18,11 +18,20 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response); // For debugging
                 $('#loginResponse').text('Login successful!');
-                alert('Login successful! Redirecting to your dashboard.');
-
-               /* // Redirect to a dashboard or another page after successful login
-                window.location.href = 'dashboard.html'; // Change 'dashboard.html' to your desired URL
-            */},
+				// Store userId in sessionStorage
+                sessionStorage.setItem('userId', response.userId);
+				if(response.isAdmin == true){
+					sessionStorage.setItem('isAdmin', true);
+					alert('Login successful! Redirecting to Admin dashboard.');
+					window.location.href='adminPanel.html';
+				}
+				else{
+					alert('Login successful! Redirecting to user dashboard.');
+					// Redirect to a dashboard or another page after successful login
+					window.location.href = 'userPanel.html'; // Change 'dashboard.html' to your desired URL
+					 	
+				}           	
+               },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('AJAX request failed:', textStatus, errorThrown);
                 $('#loginResponse').text('Login failed. Please check your username and password.');
