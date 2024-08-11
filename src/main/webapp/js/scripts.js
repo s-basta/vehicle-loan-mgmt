@@ -15,25 +15,23 @@ $(document).ready(function() {
             isAdmin: false, // Default value for isAdmin
             password: $('#passwordRegister').val()
         };
-
-        // Make the AJAX POST request
-        $.ajax({
-            url: '/api/v1/user',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(user),
-            success: function(response) {
-                if (response.success) {
-                    $('#registerResponse').text('Registration successful!');
-                } else {
-                    $('#registerResponse').text('Registration failed: ' + response.message);
-                }
-            },
-            error: function() {
-                $('#registerResponse').text('Error processing request.');
-            }
-        });
-    });
+		
+		// Make AJAX POST Request
+		$.ajax({
+		                    url: '/api/v1/user', // Example API URL
+		                    type: 'POST',
+		                    contentType: 'application/json',
+		                    data: JSON.stringify(user),
+		                    success: function(response) {
+		                        console.log(response); // For debugging
+		                        $('#registerResponse').text('Registration successful! Response ID: ' + response.userId);
+		                    },
+		                    error: function(jqXHR, textStatus, errorThrown) {
+		                        console.error('AJAX request failed:', textStatus, errorThrown);
+		                        $('#registerResponse').text('Error processing request.');
+		                    }
+		                });
+		            });
 
     // Add similar code for login form submission if needed
 });
