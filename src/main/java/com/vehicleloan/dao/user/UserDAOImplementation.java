@@ -21,6 +21,10 @@ public class UserDAOImplementation implements UserDAO{
 	public UserDAOImplementation() {
 		conn = Database.getConnection();
 	}
+
+    public void setConnection(Connection conn) {
+        if(conn != null) this.conn = conn;
+    }
 	
 	public User resultSetToUserConvertor(ResultSet resultSet) throws SQLException {
 		return new User(
