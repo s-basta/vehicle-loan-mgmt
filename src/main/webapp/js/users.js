@@ -51,24 +51,62 @@ $(document).ready(function() {
 	// Show the default page (e.g., dashboard) 
 	$('#installments_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/emi-status/1", // Replace with your API endpoint
+			"url": "/api/v1/emi-status/user/1", // Replace with your API endpoint
 			"type": "GET",
 			"dataSrc": function(json) {
-				// Return the array of data directly
+				json.forEach(function(item, index) {
+					// Fetch vehicleMake based on applicationId
+					$.ajax({
+						url: '/api/v1/applicant/' + item.applicationId, // API endpoint to get the vehicleMake
+						type: 'GET',
+						async: false, // Make it synchronous
+						success: function(response) {
+							item.vehicleMake = response.vehicleMake; // Assuming the response contains a `vehicleMake` field
+						},
+						error: function() {
+							item.vehicleMake = 'N/A'; // Fallback in case of error
+						}
+					});
+
+					// Fetch EMI amount based on applicationId
+					$.ajax({
+						url: '/api/v1/accepted-loan/' + item.applicationId, // Replace with your API endpoint to get the EMI amount
+						type: 'GET',
+						async: false, // Make it synchronous
+						success: function(response) {
+							item.emiAmount = response.emiAmount; // Assuming the response contains an `emiAmount` field
+						},
+						error: function() {
+							item.emiAmount = 'N/A'; // Fallback in case of error
+						}
+					});
+				});
+
+				// Now the json array has the updated vehicleMake and emiAmount
 				return json;
 			}
 		},
 		"columns": [{
+			"data": null, // Data is not coming from the API
+			"title": "Sr.No.",
+			"render": function(data, type, row, meta) {
+				return meta.row + 1; // Serial number starts from 1
+			}
+		}, {
 			"data": "applicationId",
 			"title": "Loan ID"
 		}, {
-			"data": "paymentStatus",
-			"title": "Payment Status"
+			"data": "vehicleMake",
+			"title": "Car Make"
+		}, {
+			"data": "emiAmount",
+			"title": "EMI Amount"
 		}, {
 			"data": "scheduledPaymentDate",
 			"title": "Payment Date"
 		}]
 	});
+
 
 	$('#applications_table').DataTable({
 		"ajax": {
@@ -116,40 +154,40 @@ $(document).ready(function() {
 			// Handle the error case here, e.g., show an alert or a message
 		}
 	});
-	
-	
+
+
 	$('#edit_changes').on('click', function(e) {
-			e.preventDefault();
-		
-			// Construct the user object with the new fields
-			var user = {
-				userId: 1,
-				firstName: $('#firstName').val(),
-				lastName: $('#lastName').val(),
-				dateOfBirth: $('#dateOfBirth').val(),
-				gender: $('#gender').val(),
-				email: $('#email').val(),
-				mobile: $('#mobile').val(), // Added mobile field
-				typeOfEmployment: $('#employmentType').val(),
-				salary: $('#salary').val(),
-				panCardNumber: $('#panCardNumber').val() || null,
-				aadharNumber: $('#aadharNumber').val() || null,
-			};
-			// Make the AJAX POST request
-			$.ajax({
-				url: '/api/v1/user',
-				type: 'PUT',
-				contentType: 'application/json',
-				data: JSON.stringify(user),
-				success: function(response) {
-					console.log(response); // For debugging
-					$('#registerResponse').text('Registration successful! Response ID: ' + response.id);
-					/*window.location.href = 'userPanel.html';*/
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					console.error('AJAX request failed:', textStatus, errorThrown);
-					$('#registerResponse').text('Error processing request.');
-				}
-			});
+		e.preventDefault();
+
+		// Construct the user object with the new fields
+		var user = {
+			userId: 1,
+			firstName: $('#firstName').val(),
+			lastName: $('#lastName').val(),
+			dateOfBirth: $('#dateOfBirth').val(),
+			gender: $('#gender').val(),
+			email: $('#email').val(),
+			mobile: $('#mobile').val(), // Added mobile field
+			typeOfEmployment: $('#employmentType').val(),
+			salary: $('#salary').val(),
+			panCardNumber: $('#panCardNumber').val() || null,
+			aadharNumber: $('#aadharNumber').val() || null,
+		};
+		// Make the AJAX POST request
+		$.ajax({
+			url: '/api/v1/user',
+			type: 'PUT',
+			contentType: 'application/json',
+			data: JSON.stringify(user),
+			success: function(response) {
+				console.log(response); // For debugging
+				$('#registerResponse').text('Registration successful! Response ID: ' + response.id);
+				/*window.location.href = 'userPanel.html';*/
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.error('AJAX request failed:', textStatus, errorThrown);
+				$('#registerResponse').text('Error processing request.');
+			}
 		});
+	});
 });
