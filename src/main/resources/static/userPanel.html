@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Dashboard</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+
+<link rel="stylesheet" href="css/users.css">
+<style>
+.page-content {
+	display: none; /* Hide all content sections by default */
+}
+</style>
+</head>
+<body>
+	<div id="logo">
+		<i class="ion-model-s"></i> <span class="big-logo">GadiFinance</span>
+		<span class="small-logo">GF</span>
+	</div>
+	<div id="left-menu">
+		<ul>
+			<li class="active"><a href="#dashboard"> <i
+					class="ion-ios-analytics"></i> <span>Dashboard</span></a></li>
+			<li><a href="#applications"> <i class="ion-filing"></i> <span>All
+						Applications</span></a></li>
+			<li><a href="#edit-profile"> <i class="ion-edit"></i> <span>Edit
+						Profile</span></a></li>
+			<li><a href="#logout"> <i class="ion-share"></i> <span>Log
+						out</span></a></li>
+		</ul>
+	</div>
+	<div id="main-content">
+		<div id="header">
+			<div class="header-left float-left">
+				<i id="toggle-left-menu" class="ion-android-menu"></i>
+			</div>
+			<div class="header-right float-right">
+				<button type="button" class="btn btn-primary"
+					style="margin-top: 10px;">Apply Loan</button>
+			</div>
+		</div>
+		<div id="page-container">
+			<!-- Content sections -->
+			<div id="dashboard" class="page-content">
+				<div class="card">
+					<div class="title">
+						<div class="row">
+							<div class="col-md-6 col-xl-6">
+								<div class="card bg-c-blue order-card">
+									<div class="card-block">
+										<h6 class="m-b-20">Total Number of Loans:</h6>
+										<h2 class="text-right">
+											<span>4</span>
+										</h2>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6 col-xl-6">
+								<div class="card bg-c-green order-card">
+									<div class="card-block">
+										<h6 class="m-b-20">Next Installment Date:</h6>
+										<h2 class="text-right">
+											<span>11-07-24</span>
+										</h2>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<!-- <div class="row">
+							<div class="col-md-6 col-xl-6">
+								<div class="card bg-c-yellow order-card">
+									<div class="card-block">
+										<h6 class="m-b-20">Orders Received</h6>
+										<h2 class="text-right">
+											<i class="fa fa-refresh f-left"></i><span>486</span>
+										</h2>
+										<p class="m-b-0">
+											Completed Orders<span class="f-right">351</span>
+										</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6 col-xl-6">
+								<div class="card bg-c-pink order-card">
+									<div class="card-block">
+										<h6 class="m-b-20">Orders Received</h6>
+										<h2 class="text-right">
+											<i class="fa fa-credit-card f-left"></i><span>486</span>
+										</h2>
+										<p class="m-b-0">
+											Completed Orders<span class="f-right">351</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<div class="card">
+					<div class="title">Upcoming Installments</div>
+					<div class="title">
+						<table id="installments_table" class="display" style="width: 100%">
+							<thead>
+								<tr>
+									<th>Sr. No.</th>
+									<th>Loan ID</th>
+									<th>Car Make</th>
+									<th>EMI Amount</th>
+									<th>Payment Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Data will be populated by DataTables -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div id="applications" class="page-content">
+				<div class="card">
+					<div class="title">
+						<table id="applications_table" class="display" style="width: 100%">
+							<thead>
+								<tr>
+									<th>Application ID</th>
+									<th>Loan Amount</th>
+									<th>Yearly Salary</th>
+									<th>Payment Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Data will be populated by DataTables -->
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+
+			<div id="edit-profile" class="page-content">
+				<div class="card">
+					<div class="title">Edit Profile</div>
+					<div class="title">
+						<form>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="firstName">First Name</label> <input type="text"
+										class="form-control" id="firstName"
+										placeholder="Enter your first name" value="" required>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastName">Last Name</label> <input type="text"
+										class="form-control" id="lastName"
+										placeholder="Enter your last name" value="" required>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="dateOfBirth">Date of Birth</label> <input
+										type="date" class="form-control" id="dateOfBirth" value=""
+										required>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="gender">Gender</label> <select class="form-control"
+										id="gender">
+										<option value="MALE">MALE</option>
+										<option value="FEMALE">FEMALE</option>
+										<option value="OTHER">OTHER</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="username">Username</label> <input type="text"
+										class="form-control" id="username" value="" readonly>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="email">Email</label> <input type="email"
+										class="form-control" id="email" placeholder="Enter your email"
+										value="" required>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="mobile">Mobile</label> <input type="tel"
+										class="form-control" id="mobile"
+										placeholder="Enter your mobile number" value="" required>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="employmentType">Type of Employment</label> <select
+										class="form-control" id="employmentType">
+										<option value="SELF_EMPLOYED">SELF_EMPLOYED</option>
+										<option value="SALARIED">SALARIED</option>
+										<option value="HOUSEWIFE">HOUSEWIFE</option>
+										<option value="PENSIONER">PENSIONER</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="salary">Salary</label> <input type="number"
+										class="form-control" id="salary"
+										placeholder="Enter your salary" value="" required>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="panCardNumber">PAN Card Number</label> <input
+										type="text" class="form-control" id="panCardNumber"
+										placeholder="Enter your PAN card number" value="">
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="aadharNumber">Aadhar Number</label> <input
+										type="text" class="form-control" id="aadharNumber"
+										placeholder="Enter your Aadhar number" value="">
+								</div>
+							</div>
+
+							<button id="edit_changes" type="submit" class="btn btn-primary">Save
+								Changes</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+			<div id="logout" class="page-content">
+				<div class="card">
+					<div class="title">Log out</div>
+					<div class="content">
+						<p>
+							You have been logged out. <a href="login.html">Click here to
+								log back in</a>.
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<span id="show-label">Hello</span>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<!-- DataTables JS -->
+	<script
+		src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script src="js/users.js"></script>
+	<script type="text/javascript">
+		// Initialize DataTable
+
+		$(document).ready(function() {
+
+			$('#dashboard').show();
+
+			$('#left-menu li > a').click(function(e) {
+				e.preventDefault(); // Prevent default action
+
+				// Get the ID of the corresponding content section
+				var targetId = $(this).attr('href').substring(1);
+
+				// Hide all content sections
+				$('.page-content').hide();
+
+				// Show the selected content section
+				$('#' + targetId).show();
+
+				// Set active class on the clicked item
+				$('#left-menu li').removeClass('active');
+				$(this).parent().addClass('active');
+			});
+		});
+	</script>
+</body>
+</html>

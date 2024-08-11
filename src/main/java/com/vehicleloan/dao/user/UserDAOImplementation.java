@@ -22,7 +22,7 @@ public class UserDAOImplementation implements UserDAO{
 		conn = Database.getConnection();
 	}
 	
-	private User resultSetToUserConvertor(ResultSet resultSet) throws SQLException {
+	public User resultSetToUserConvertor(ResultSet resultSet) throws SQLException {
 		return new User(
                 resultSet.getInt("userId"),
                 resultSet.getString("firstName"),
@@ -41,7 +41,7 @@ public class UserDAOImplementation implements UserDAO{
             );	
 	}
 	
-	private User getByUsername(String username) {
+	public User getByUsername(String username) {
 		User user = null;
 
 		try {
@@ -57,7 +57,7 @@ public class UserDAOImplementation implements UserDAO{
 		return user;
 	}
 
-	private User getByEmail(String email) {
+	public User getByEmail(String email) {
 		User user = null;
 
 		try {

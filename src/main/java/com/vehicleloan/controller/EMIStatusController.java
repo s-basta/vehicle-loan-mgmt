@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("emi-status")
@@ -18,6 +20,17 @@ public class EMIStatusController {
 	public EMIStatusController(EMIStatusDAO emiStatusDAO) {
 		this.emiStatusDAO = emiStatusDAO;
 	}
+
+	@GetMapping("/user/{userId}")
+	public ResponseEntity<List<EMIStatus>> getEMIStatusesByUserId(@PathVariable Integer userId) {
+		List<EMIStatus> emiStatuses = emiStatusDAO.getByUserId(userId);
+		if(!emiStatuses.isEmpty()) {
+			return new ResponseEntity<>(emiStatuses , HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
 
 	@GetMapping("/{applicationId}")
 	public ResponseEntity<List<EMIStatus>> getEMIStatusesByApplicationId(@PathVariable int applicationId) {

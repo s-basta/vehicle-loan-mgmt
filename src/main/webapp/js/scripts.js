@@ -19,12 +19,12 @@ window.onclick = function(event) {
 
 
 $(document).ready(function() {
-    // Register Form Submission
-    $('#registerForm').on('submit', function(e) {
-        e.preventDefault();
-
-        // Construct the user object with the new fields
-        var user = {
+	// Register Form Submission
+	$('#registerForm').on('submit', function(e) {
+		e.preventDefault();
+		console.log("hi");
+		// Construct the user object with the new fields
+		    var user = {
             firstName: $('#firstName').val(),
             lastName: $('#lastName').val(),
             dateOfBirth: $('#dob').val(),
@@ -54,5 +54,4 @@ $(document).ready(function() {
 		                });
 		            });
 
-    // Add similar code for login form submission if needed
 });
