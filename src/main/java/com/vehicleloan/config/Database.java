@@ -16,6 +16,8 @@ public class Database {
 			
 			CONN = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "password");
 			
+			CONN.setAutoCommit(true);
+			
 			return CONN;
 		}
 		catch(Exception e) {

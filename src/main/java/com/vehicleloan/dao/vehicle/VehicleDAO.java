@@ -7,7 +7,7 @@ public interface VehicleDAO {
 	List<Vehicle> getAll();
 	List<String> getVehicleType();
 	List<Vehicle> getVehiclesByVehicleType(String vehicleType);
-	boolean create(Vehicle vehicle);
+	Integer create(Vehicle vehicle);
 	boolean update(Vehicle vehicle);
 	boolean delete(int vehicleId);
 }

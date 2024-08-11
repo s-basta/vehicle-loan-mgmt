@@ -100,13 +100,13 @@ public class VehicleDAOImplementation implements VehicleDAO {
 	}
 
 	@Override
-	public boolean create(Vehicle vehicle) {
+	public Integer create(Vehicle vehicle) {
 		// TODO Auto-generated method stub
 		try {
 			String sql = "INSERT INTO `vloanVehicle` (" +
 	                "`vehicleMake`, `vehicleType`, `ex_showroom_price`, `on_road_price`) " +
 	                "VALUES (?, ?, ?, ?)";
-			PreparedStatement pst = conn.prepareStatement(sql);
+			PreparedStatement pst = conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
 					
 			pst.setString(1, vehicle.getVehicleMake());
             pst.setString(2, vehicle.getVehicleType());
@@ -114,12 +114,18 @@ public class VehicleDAOImplementation implements VehicleDAO {
             pst.setDouble(4, vehicle.getOnRoadPrice());
             
             int rows = pst.executeUpdate();
-            if(rows > 0) return true;
+            if(rows > 0) { 
+            	try (ResultSet rs = pst.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // Return the generated userId
+                    }
+                }
+            }
         }catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return false;
+		return null;
 	}
 
 	@Override
