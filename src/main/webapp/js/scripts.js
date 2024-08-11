@@ -1,3 +1,23 @@
+// openModal functionality
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    var modals = document.getElementsByClassName('modal');
+    for (var i = 0; i < modals.length; i++) {
+        if (event.target == modals[i]) {
+            modals[i].style.display = 'none';
+        }
+    }
+};
+
+
 $(document).ready(function() {
     // Register Form Submission
     $('#registerForm').on('submit', function(e) {
@@ -17,6 +37,7 @@ $(document).ready(function() {
         };
 		
 		// Make AJAX POST Request
+		// now reverse testing againnn
 		$.ajax({
 		                    url: '/api/v1/user', // Example API URL
 		                    type: 'POST',

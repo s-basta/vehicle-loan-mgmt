@@ -6,18 +6,23 @@
     <title>Vehicle Loan Management Application</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/homepage.css">
 </head>
 <body>
     <header class="bg-dark text-white p-3">
         <div class="container">
-            <h1>Vehicle Loan Management</h1>
-            <nav class="nav">
-                <a class="nav-link text-white" href="#home">Home</a>
-                <a class="nav-link text-white" href="#features">Features</a>
-                <a class="nav-link text-white" href="#login">Login</a>
-                <a class="nav-link text-white" href="#register">RegisterRRRRRRRRRRRR</a>
-            </nav>
+			<nav class="navbar">
+			    <div class="navbar-container">
+			        <a class="navbar-brand" href="#home">VLoan - The Vehicle Loan Company</a>
+			        <div class="navbar-menu">
+			            <a class="navbar-link" href="index.html">Home</a>
+			            <a class="navbar-link" href="#features">Features</a>
+			            <a class="navbar-link" href="login.html">Login</a>
+			            <a class="navbar-link" href="register.html">Register</a>
+			        </div>
+			    </div>
+			</nav>
+
         </div>
     </header>
 
@@ -57,75 +62,8 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>     
 
-        <!-- Login Section -->
-        <section id="login" class="py-5">
-            <h2 class="text-center">Login</h2>
-            <div class="container">
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-                <div id="loginResponse"></div>
-            </div>
-        </section>
-
-        <!-- Register Section -->
-        <section id="register" class="py-5">
-            <h2 class="text-center">Register</h2>
-            <div class="container">
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="dob">Date of Birth:</label>
-                        <input type="date" class="form-control" id="dob" name="dob" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender:</label>
-                        <select class="form-control" id="gender" name="gender" required>
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                            <option value="OTHER">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="emailRegister">Email:</label>
-                        <input type="email" class="form-control" id="emailRegister" name="emailRegister" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile">Mobile Number:</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="passwordRegister">Password:</label>
-                        <input type="password" class="form-control" id="passwordRegister" name="passwordRegister" placeholder="Password" required>
-                    </div>
-                    <!-- Hidden field for isAdmin -->
-                    <input type="hidden" id="isAdmin" name="isAdmin" value="false">
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </form>
-                <div id="registerResponse"></div>
-            </div>
-        </section>
     </main>
 
     <footer class="bg-dark text-white text-center py-3">
