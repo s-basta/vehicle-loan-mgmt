@@ -21,6 +21,7 @@ import com.vehicleloan.dao.emiStatus.EMIStatusDAO;
 import com.vehicleloan.dao.user.User;
 import com.vehicleloan.dao.user.UserDAO;
 import com.vehicleloan.utils.DateUtils;
+import com.vehicleloan.utils.EMIUtils;
 
 @Service
 public class ApplicantDAOImplementation implements ApplicantDAO {
@@ -247,16 +248,26 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
 
             int rows = pst.executeUpdate();
             if (applicant.getLoanStatus() == LoanStatus.APPROVED) {
-                acceptedLoanDAO.delete(applicant.getApplicationID());
+                emiStatusDAO.deleteByApplicationId(applicant.getApplicationID());
+
                 Applicant currentApplicant = get(applicant.getApplicationID());
-
-                acceptedLoanDAO.create(new AcceptedLoan(currentApplicant.getApplicationID(),
-                        currentApplicant.getLoanAmount() * (1 + (currentApplicant.getRateOfInterest() / 100))
-                                / (double) currentApplicant.getLoanTenure(),
-                        currentApplicant.getLoanTenure(),
-                        new java.util.Date(), DateUtils.addMonths(DateUtils.addMonths(new java.util.Date(), 1),
-                                currentApplicant.getLoanTenure() + 1)));
-
+                
+                Double emiAmount = EMIUtils.calculateEMI(currentApplicant.getLoanAmount(), currentApplicant.getRateOfInterest() / (double) 100, currentApplicant.getLoanTenure());
+                
+                AcceptedLoan acceptedLoan = acceptedLoanDAO.get(currentApplicant.getApplicationID());
+                if(acceptedLoan == null)
+                    acceptedLoanDAO.create(new AcceptedLoan(currentApplicant.getApplicationID(),
+                            emiAmount,
+                            currentApplicant.getLoanTenure(),
+                            new java.util.Date(), DateUtils.addMonths(DateUtils.addMonths(new java.util.Date(), 1),
+                                    currentApplicant.getLoanTenure() + 1)));
+                else
+                    acceptedLoanDAO.update(new AcceptedLoan(currentApplicant.getApplicationID(),
+                    emiAmount,
+                    currentApplicant.getLoanTenure(),
+                    new java.util.Date(), DateUtils.addMonths(DateUtils.addMonths(new java.util.Date(), 1),
+                            currentApplicant.getLoanTenure() + 1)));
+                            
                 int numberOfEMIs = currentApplicant.getLoanTenure();
                 java.util.Date startDate = DateUtils.addMonths(new java.util.Date(), 1);
 
