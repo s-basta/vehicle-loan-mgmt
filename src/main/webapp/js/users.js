@@ -67,7 +67,7 @@ $(document).ready(function() {
 	    }
 	// Show the default page (e.g., dashboard)
 	$.ajax({
-		url: 'http://localhost:8080/api/v1/accepted-loan?userId='+userId;, // Your API endpoint
+		url: 'http://localhost:8080/api/v1/accepted-loan?userId='+userId, // Your API endpoint
 		type: 'GET',
 		success: function(response) {
 			var totalLoans = response.length; // Assuming the API returns an array of loans

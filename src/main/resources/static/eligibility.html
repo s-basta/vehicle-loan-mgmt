@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Vehicle Loan Management Application</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/homepage.css">
+    <style>
+        .readonly-field {
+            background-color: #e9ecef; /* Light grey background */
+            cursor: not-allowed; /* Show the not-allowed cursor */
+            border: 1px solid #ced4da; /* Ensure the border is visible */
+        }
+        .form-group label {
+            font-weight: bold; /* Make labels bold for better readability */
+        }
+        .container {
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-dark text-white p-3">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-container">
+                    <a class="navbar-brand" href="#home">GaadiFinance - The Vehicle Loan Company</a>
+                    <div class="navbar-menu">
+                        <a class="navbar-link" href="#home">Home</a>
+                        <a class="navbar-link" href="#features">Features</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>    
+        <!-- User Profile Section -->
+        <section id="profile" class="py-5">
+            <h2 class="text-center"><b>User Profile</b></h2>
+            <div class="container">
+                <form id="userProfileForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" class="form-control readonly-field" id="firstName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control readonly-field" id="lastName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth:</label>
+                        <input type="text" class="form-control readonly-field" id="dateOfBirth" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <input type="text" class="form-control readonly-field" id="gender" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control readonly-field" id="username" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control readonly-field" id="email" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number:</label>
+                        <input type="text" class="form-control readonly-field" id="mobile" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="employmentType">Employment Type:</label>
+                        <input type="text" class="form-control readonly-field" id="employmentType" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>
+                        <input type="text" class="form-control readonly-field" id="salary" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="panCardNumber">PAN Card Number:</label>
+                        <input type="text" class="form-control readonly-field" id="panCardNumber" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="aadharNumber">Aadhar Number:</label>
+                        <input type="text" class="form-control readonly-field" id="aadharNumber" readonly>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 GaadiFinance. All rights reserved.</p>
+    </footer>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/eligibility.js"></script>
+</body>
+</html>
