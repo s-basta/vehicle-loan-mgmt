@@ -56,22 +56,23 @@
 					<div class="title">
 						<div class="row">
 							<div class="col-md-6 col-xl-6">
-								<div class="card bg-c-blue order-card">
+								<div id="total-loans-card" class="card bg-c-blue order-card">
 									<div class="card-block">
 										<h6 class="m-b-20">Total Number of Loans:</h6>
 										<h2 class="text-right">
-											<span>4</span>
+											<span></span>
 										</h2>
 									</div>
 								</div>
 							</div>
 
 							<div class="col-md-6 col-xl-6">
-								<div class="card bg-c-green order-card">
+								<div id="next-installment-date"
+									class="card bg-c-green order-card">
 									<div class="card-block">
 										<h6 class="m-b-20">Next Installment Date:</h6>
 										<h2 class="text-right">
-											<span>11-07-24</span>
+											<span></span>
 										</h2>
 									</div>
 								</div>
@@ -138,10 +139,12 @@
 						<table id="applications_table" class="display" style="width: 100%">
 							<thead>
 								<tr>
+									<th>Sr. No.</th>
 									<th>Application ID</th>
+									<th>Car Make</th>
 									<th>Loan Amount</th>
-									<th>Yearly Salary</th>
-									<th>Payment Date</th>
+									<th>Loan Status</th>
+									<th>Applied On</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -245,15 +248,10 @@
 				</div>
 			</div>
 
-			<div id="logout" class="page-content">
+			<div id="logout" class="page-content" onclick="logoutFunction()">
 				<div class="card">
 					<div class="title">Log out</div>
-					<div class="content">
-						<p>
-							You have been logged out. <a href="login.html">Click here to
-								log back in</a>.
-						</p>
-					</div>
+					
 				</div>
 			</div>
 

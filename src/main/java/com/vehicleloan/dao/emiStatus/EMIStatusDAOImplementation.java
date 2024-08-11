@@ -24,7 +24,7 @@ public class EMIStatusDAOImplementation implements EMIStatusDAO {
 	@Override
 	public List<EMIStatus> getByUserId(Integer userId) {
 		List<EMIStatus> emiStatuses = new ArrayList<>();
-		String sql = "SELECT vloanEMIStatus.* FROM vloanEMIStatus , vloanApplicant WHERE vloanEMIStatus.applicationId = vloanApplicant.applicationId AND userId = ?";
+		String sql = "SELECT vloanEMIStatus.* FROM vloanEMIStatus , vloanApplicant WHERE vloanEMIStatus.applicationId = vloanApplicant.applicationId AND userId = ? ORDER BY scheduledPaymentDate";
 
 		try (PreparedStatement pst = conn.prepareStatement(sql)) {
 			pst.setInt(1, userId);

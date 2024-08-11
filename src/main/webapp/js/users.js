@@ -47,6 +47,14 @@ function windowResize() {
 	}
 }
 
+function logout() {
+    // Clear userId from sessionStorage
+    sessionStorage.removeItem('userId');
+
+    // Optionally, redirect the user to a login page or homepage
+    window.location.href = 'login.html'; // Change 'login.html' to your desired URL
+}
+
 $(document).ready(function() {
 	// Retrieve userId from sessionStorage
 	    var userId = sessionStorage.getItem('userId');
@@ -57,7 +65,37 @@ $(document).ready(function() {
 	        window.location.href = 'login.html'; // Redirect to login if no userId
 	        return;
 	    }
-	// Show the default page (e.g., dashboard) 
+	// Show the default page (e.g., dashboard)
+	$.ajax({
+		url: 'http://localhost:8080/api/v1/accepted-loan?userId='+userId;, // Your API endpoint
+		type: 'GET',
+		success: function(response) {
+			var totalLoans = response.length; // Assuming the API returns an array of loans
+
+			// Update the number in the HTML
+			$('#total-loans-card .card-block h2 span').text(totalLoans);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error('Failed to fetch loan data:', textStatus, errorThrown);
+		}
+	});
+
+	$.ajax({
+		url: 'http://localhost:8080/api/v1/emi-status/user/1',
+		type: 'GET',
+		success: function(response) {
+			// Assuming response is an array and you need the first scheduledPaymentDate
+			var nextInstallmentDate = response.length > 0 ? response[0].scheduledPaymentDate : '';
+
+			// Update the HTML
+			$('#next-installment-date h2 span').text(nextInstallmentDate);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error('Failed to fetch the next installment date:', textStatus, errorThrown);
+			$('#next-installment-date h2 span').text(''); // Set blank if there's an error
+		}
+	});
+
 	$('#installments_table').DataTable({
 		"ajax": {
 			"url": "/api/v1/emi-status/user/"+ userId, // Use dynamic userId
@@ -119,7 +157,7 @@ $(document).ready(function() {
 
 	$('#applications_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/applicant", // Replace with your API endpoint
+			"url": "/api/v1/applicant?userId=1", // Replace with your API endpoint
 			"type": "GET",
 			"dataSrc": function(json) {
 				// Return the array of data directly
@@ -127,17 +165,26 @@ $(document).ready(function() {
 			}
 		},
 		"columns": [{
+			"data": null, // Data is not coming from the API
+			"title": "Sr.No.",
+			"render": function(data, type, row, meta) {
+				return meta.row + 1; // Serial number starts from 1
+			}
+		}, {
 			"data": "applicationID",
 			"title": "Application ID"
+		}, {
+			"data": "vehicleMake",
+			"title": "Car Make"
 		}, {
 			"data": "loanAmount",
 			"title": "Loan Amount"
 		}, {
-			"data": "yearlySalary",
-			"title": "Yearly Salary"
+			"data": "loanStatus",
+			"title": "Loan Status"
 		}, {
 			"data": "applicationDate",
-			"title": "Application Date"
+			"title": "Applied On"
 		}]
 	}); // Initialize DataTable
 

@@ -47,6 +47,14 @@ function windowResize() {
 	}
 }
 
+function logout() {
+    // Clear userId from sessionStorage
+    sessionStorage.removeItem('userId');
+
+    // Optionally, redirect the user to a login page or homepage
+    window.location.href = 'login.html'; // Change 'login.html' to your desired URL
+}
+
 $(document).ready(function() {
 	// Show the default page (e.g., dashboard) 
 
