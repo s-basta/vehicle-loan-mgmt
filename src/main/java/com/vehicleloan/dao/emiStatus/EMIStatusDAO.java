@@ -3,6 +3,8 @@ package com.vehicleloan.dao.emiStatus;
 import java.util.List;
 
 public interface EMIStatusDAO {
+	List<EMIStatus> getByUserId(Integer userId);
+	
 	List<EMIStatus> get(Integer ApplicationId);
 
 	boolean create(EMIStatus emiStatus);

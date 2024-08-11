@@ -22,6 +22,28 @@ public class EMIStatusDAOImplementation implements EMIStatusDAO {
 	}
 
 	@Override
+	public List<EMIStatus> getByUserId(Integer userId) {
+		List<EMIStatus> emiStatuses = new ArrayList<>();
+		String sql = "SELECT vloanEMIStatus.* FROM vloanEMIStatus , vloanApplicant WHERE vloanEMIStatus.applicationId = vloanApplicant.applicationId AND userId = ?";
+
+		try (PreparedStatement pst = conn.prepareStatement(sql)) {
+			pst.setInt(1, userId);
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+				EMIStatus emiStatus = new EMIStatus(rs.getInt("statusId"), rs.getInt("applicationId"),
+						PaymentStatus.valueOf(rs.getString("paymentStatus")), rs.getDate("scheduledPaymentDate"),
+						rs.getDate("actualPaymentDate"));
+				emiStatuses.add(emiStatus);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return emiStatuses;
+	}
+
+	@Override
 	public List<EMIStatus> get(Integer applicationId) {
 		List<EMIStatus> emiStatuses = new ArrayList<>();
 		String sql = "SELECT * FROM vloanEMIStatus WHERE applicationId = ?";
@@ -147,5 +169,4 @@ public class EMIStatusDAOImplementation implements EMIStatusDAO {
 
 		return false;
 	}
-
 }
