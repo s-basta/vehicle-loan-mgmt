@@ -25,4 +25,10 @@ public class VehicleController {
 		List<Vehicle> vehicles = vehicleDAO.getAll();
 		return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
 	}
+	
+	@GetMapping
+	public ResponseEntity<List<String>> getVehicleMakes(){
+		List<String> vehicleMakes = vehicleDAO.getVehicleMakes();
+		return new ResponseEntity<List<String>>(vehicleMakes, HttpStatus.OK);
+	}
 }
