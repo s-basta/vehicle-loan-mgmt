@@ -26,9 +26,9 @@ public class VehicleController {
 		return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
 	}
 	
-	@GetMapping
-	public ResponseEntity<List<String>> getVehicleMakes(){
-		List<String> vehicleMakes = vehicleDAO.getVehicleMakes();
-		return new ResponseEntity<List<String>>(vehicleMakes, HttpStatus.OK);
-	}
+//	@GetMapping
+//	public ResponseEntity<List<String>> getVehicleMakes(){
+//		List<String> vehicleMakes = vehicleDAO.getVehicleMakes();
+//		return new ResponseEntity<List<String>>(vehicleMakes, HttpStatus.OK);
+//	}
 }
