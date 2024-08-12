@@ -20,7 +20,9 @@ Admins can efficiently review, manage, and either approve or reject loan applica
 #### Experience a hassle-free way to manage your vehicle loans with GaadiFinance.
 
 ## Demo Video 
-![Demo Video](assets/vehicle_loan_mgmt_demo.mp4)
+[Download/View Demo Video](assets/vehicle_loan_mgmt_demo.mp4)
+
+<div style="position:relative; width:100%; height:0px; padding-bottom:58.728%"><iframe allow="fullscreen;autoplay" allowfullscreen height="100%" src="https://streamable.com/e/df479b?autoplay=1&muted=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe></div>
 
 ---
 
