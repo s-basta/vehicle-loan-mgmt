@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -24,9 +26,8 @@ public class VehicleDAOImplementation implements VehicleDAO {
 		return new Vehicle(
 				result.getInt("vehicleId"),
 				result.getString("vehicleMake"),
-				result.getString("vehicleType"),
-				result.getDouble("ex_Showroom_Price"),
-				result.getDouble("on_Road_Price"));				
+				result.getString("vehicleModel"),
+				result.getDouble("ex_Showroom_Price"));		
 	}
 	
 	@Override
@@ -64,30 +65,30 @@ public class VehicleDAOImplementation implements VehicleDAO {
 	}
 
 	@Override
-	public List<String> getVehicleType() {
-		List<String> vehicleTypes = new ArrayList<>();
+	public List<String> getVehicleMakes() {
+		List<String> vehicleMakes = new ArrayList<>();
 		
 		try {
 			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("select distinct vehicleType from vloanVehicle");
+			ResultSet result = statement.executeQuery("select distinct vehicleMake from vloanVehicle");
 			
 			while(result.next()) {
-				vehicleTypes.add(result.getString("vehicleType"));
+				vehicleMakes.add(result.getString("vehicleMake"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return vehicleTypes;
+		return vehicleMakes;
 	}
 
 	@Override
-	public List<Vehicle> getVehiclesByVehicleType(String vehicleType) {
+	public List<Vehicle> getVehiclesByVehicleMake(String vehicleMake) {
 		List<Vehicle> vehicles = new ArrayList<>();
 		
 		try {
 			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("select * from vloanvehicle where vehicletype like '" + vehicleType + "'");
+			ResultSet result = statement.executeQuery("select * from vloanvehicle where vehicleMake like '" + vehicleMake + "'");
 			
 			while(result.next()) {
 				vehicles.add(resultSetToVehicleConvertor(result));
@@ -98,18 +99,46 @@ public class VehicleDAOImplementation implements VehicleDAO {
 		
 		return vehicles;
 	}
+	
+	// Method to get showroom and on-road prices based on make and model
+	@Override
+	public Map<String, Double> getPricesByMakeAndModel(String make, String model) {
+	    Map<String, Double> prices = new HashMap<>();
+	    
+	    String sql = "SELECT ex_showroom_price, on_road_price FROM vloanVehicle WHERE vehicleMake = ? AND vehicleModel = ?";
+	    
+	    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+	        pst.setString(1, make);
+	        pst.setString(2, model);
+	        
+	        try (ResultSet rs = pst.executeQuery()) {
+	            if (rs.next()) {
+	                double showroomPrice = rs.getDouble("ex_showroom_price");
+	                double onRoadPrice = rs.getDouble("on_road_price");
+	                
+	                prices.put("showroomPrice", showroomPrice);
+	                prices.put("onRoadPrice", onRoadPrice);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return prices;
+	}
+
 
 	@Override
 	public boolean create(Vehicle vehicle) {
 		// TODO Auto-generated method stub
 		try {
 			String sql = "INSERT INTO `vloanVehicle` (" +
-	                "`vehicleMake`, `vehicleType`, `ex_showroom_price`, `on_road_price`) " +
+	                "`vehicleMake`, `vehicleModel`, `ex_showroom_price`, `on_road_price`) " +
 	                "VALUES (?, ?, ?, ?)";
 			PreparedStatement pst = conn.prepareStatement(sql);
 					
 			pst.setString(1, vehicle.getVehicleMake());
-            pst.setString(2, vehicle.getVehicleType());
+            pst.setString(2, vehicle.getVehicleModel());
             pst.setDouble(3, vehicle.getExShowroomPrice());
             pst.setDouble(4, vehicle.getOnRoadPrice());
             
@@ -135,9 +164,9 @@ public class VehicleDAOImplementation implements VehicleDAO {
             setClauses.add("vehicleMake = ? ");
             parameters.add(vehicle.getVehicleMake());
         }
-        if (vehicle.getVehicleType() != null) {
-            setClauses.add("vehicleType = ? ");
-            parameters.add(vehicle.getVehicleType());
+        if (vehicle.getVehicleModel() != null) {
+            setClauses.add("vehicleModel = ? ");
+            parameters.add(vehicle.getVehicleModel());
         }
         if (vehicle.getExShowroomPrice() != null) {
             setClauses.add("ex_showroom_price = ? ");

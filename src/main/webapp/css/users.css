@@ -203,6 +203,7 @@ a:hover {
 
 
 #header {
+	display:flex;
     background-color: #fff;
     height: 60px;
     border-bottom: 1px solid #e6ecf5;
@@ -438,3 +439,49 @@ a:hover {
     }
     
 }    
+
+
+        /* New container for marquee */
+.header-middle {
+    flex: 1; /* Takes up available space between left and right */
+    overflow: hidden; /* Hide overflowing content */
+    position: relative;
+    white-space: nowrap; /* Prevent text wrapping */
+    display: flex;
+    align-items: center; /* Vertically center content */
+}
+
+        .marquee-content {
+        	color: #000000; /* Change this to your desired color */
+        	font-size : 1.2rem;
+        	font-weight:bold;
+            display: inline-block;
+            padding-left: 1%; /* Start from outside of the container */
+            animation: marquee 10s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+.btn-enhanced {
+            /* font-size: 1.25rem; Increase font size */
+            padding: 10px 15px; /* Increase padding for a bigger button */
+            background: linear-gradient(45deg, #0e9aee, #59e0c5); /* Gradient background */
+            /* color: #fff; Text color */
+            border: none; /* Remove default border */
+            border-radius: 50px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
+        }
+
+.btn-enhanced:hover {
+    background: linear-gradient(45deg, #de1f80, #0e9aee); /* Inverted gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}

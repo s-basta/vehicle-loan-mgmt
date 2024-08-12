@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GaadiFinance</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="css/eligibility.css">
+</head>
+<body>
+	<main>
+		<header class="bg-dark text-white p-3">
+			<div class="container">
+				<nav class="navbar">
+					<div class="navbar-container"
+						style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+						<div class="navbar-brand" style="flex: 1; text-align: left;">
+							<i class="ion-model-s"></i> <span class="big-logo">GaadiFinance</span>
+						</div>
+						<div class="navbar-brand"
+							style="flex: 2; text-align: center; flex-grow: 1;">
+							<h2>
+								<b>Loan Application</b>
+							</h2>
+						</div>
+						<div class="navbar-brand" style="flex: 1; text-align: right;">
+							<a class="navbar-link" href="userPanel.html">Dashboard</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</header>
+
+		<!-- Multi-Page Form -->
+		<section id="application" class="py-5">
+			<p class="text-center">
+				<b>Fill in all information to apply for a loan.</b> <br>
+				Profile info can be edited via the `Edit Profile` Button on Dashboard
+				Only. Eligibility related info can only be changed on the `Check
+				Eligibility` Page.
+			</p>
+			<div class="container">
+				<form id="loanApplicationForm">
+					<!-- Navigation Tabs -->
+					<ul class="nav nav-tabs" id="formTabs" role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+							aria-controls="profile" aria-selected="true">Profile
+								Information</a></li>
+						<li class="nav-item"><a class="nav-link" id="eligibility-tab"
+							data-toggle="tab" href="#eligibility" role="tab"
+							aria-controls="eligibility" aria-selected="false">Eligibility
+								Information</a></li>
+						<li class="nav-item"><a class="nav-link" id="additional-tab"
+							data-toggle="tab" href="#additional" role="tab"
+							aria-controls="additional" aria-selected="false">Additional
+								Information</a></li>
+					</ul>
+
+					<!-- Tab Content -->
+					<div class="tab-content" id="formTabContent">
+						<!-- Profile Information Tab -->
+						<div class="tab-pane fade show active" id="profile"
+							role="tabpanel" aria-labelledby="profile-tab">
+							<div class="form-group">
+								<label for="firstName">First Name:</label> <input type="text"
+									class="form-control readonly-field" id="firstName" readonly>
+							</div>
+							<div class="form-group">
+								<label for="lastName">Last Name:</label> <input type="text"
+									class="form-control readonly-field" id="lastName" readonly>
+							</div>
+							<div class="form-group">
+								<label for="dateOfBirth">Date of Birth:</label> <input
+									type="text" class="form-control readonly-field"
+									id="dateOfBirth" readonly>
+							</div>
+							<div class="form-group">
+								<label for="gender">Gender:</label> <input type="text"
+									class="form-control readonly-field" id="gender" readonly>
+							</div>
+							<div class="form-group">
+								<label for="username">Username:</label> <input type="text"
+									class="form-control readonly-field" id="username" readonly>
+							</div>
+							<div class="form-group">
+								<label for="email">Email:</label> <input type="email"
+									class="form-control readonly-field" id="email" readonly>
+							</div>
+							<div class="form-group">
+								<label for="mobile">Mobile Number:</label> <input type="text"
+									class="form-control readonly-field" id="mobile" readonly>
+							</div>
+							<button type="button" class="btn btn-primary" id="toEligibility">Next</button>
+						</div>
+
+						<!-- Eligibility Information Tab -->
+						<div class="tab-pane fade" id="eligibility" role="tabpanel"
+							aria-labelledby="eligibility-tab">
+							<div class="form-group">
+								<label for="employmentType">Employment Type:</label> <input type="text"
+									class="form-control" id="employmentType" readonly>
+							</div>
+							<div class="form-group">
+								<label for="salary">Salary:</label> <input type="number"
+									class="form-control" id="salary" readonly>
+							</div>
+							<div class="form-group">
+								<label for="existingEMIs">Existing EMIs (If Any):</label> <input
+									type="number" class="form-control" id="existingEMIs" readonly>
+							</div>
+							<div class="form-group">
+								<label for="vehicleMake">Choose Vehicle Make:</label> <input
+									type="text" class="form-control" id="vehicleMake" readonly>
+							</div>
+							<div class="form-group">
+								<label for="vehicleModel">Choose Model:</label> <input
+									type="text" class="form-control" id="vehicleModel" readonly>
+							</div>
+							<div class="form-group">
+								<label for="showroomPrice">Showroom Price (INR):</label> <input
+									type="text" class="form-control" id="showroomPrice" readonly>
+							</div>
+							<div class="form-group">
+								<label for="onRoadPrice">On-Road Price (INR):</label> <input
+									type="text" class="form-control" id="onRoadPrice" readonly>
+							</div>
+							<div class="form-group">
+								<label for="loanTenureMonths">Loan Tenure (Months) :</label> <input
+									type="number" value="" class="form-control"
+									id="loanTenureMonths" readonly>
+							</div>
+							<button type="button" class="btn btn-secondary" id="toProfile">Back</button>
+							<button type="button" class="btn btn-primary" id="toAdditional">Next</button>
+						</div>
+
+						<!-- Additional Information Tab -->
+						<div class="tab-pane fade" id="additional" role="tabpanel"
+							aria-labelledby="additional-tab">
+							<div class="form-group">
+								<label for="houseNumber">House Number:</label> <input
+									type="text" class="form-control" id="houseNumber" required>
+							</div>
+							<div class="form-group">
+								<label for="streetName">Street Name:</label> <input type="text"
+									class="form-control" id="streetName" required>
+							</div>
+							<div class="form-group">
+								<label for="city">City:</label> <input type="text"
+									class="form-control" id="city" required>
+							</div>
+							<div class="form-group">
+								<label for="state">State:</label> <input type="text"
+									class="form-control" id="state" required>
+							</div>
+							<div class="form-group">
+								<label for="pinCode">Pin Code:</label> <input type="text"
+									class="form-control" id="pinCode" required>
+							</div>
+							<div class="form-group">
+								<label for="panNumber">PAN Number:</label> <input type="text"
+									class="form-control" id="panNumber" required>
+							</div>
+							<div class="form-group">
+								<label for="aadharNumber">Aadhar Number:</label> <input
+									type="text" class="form-control" id="aadharNumber" required>
+							</div>
+							<button type="button" class="btn btn-secondary"
+								id="toEligibilityBack">Back</button>
+							<button type="submit" class="btn btn-primary">Submit
+								Application</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+	</main>
+	<footer class="bg-dark text-white text-center py-3">
+		<p>&copy; 2024 GaadiFinance. All rights reserved.</p>
+	</footer>
+
+	<!-- jQuery and Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="js/applyLoan.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Loan Management Application</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="css/eligibility.css">
+</head>
+<body>
+	<header class="bg-dark text-white p-3">
+		<div class="container">
+			<nav class="navbar">
+				<div class="navbar-container"
+					style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+					<div class="navbar-brand" style="flex: 1; text-align: left;">
+						<i class="ion-model-s"></i> <span class="big-logo">GaadiFinance</span>
+					</div>
+					<div class="navbar-brand"
+						style="flex: 2; text-align: center; flex-grow: 1;">
+						<h2>
+							<b>Selected Loan Quote</b>
+						</h2>
+					</div>
+					<div class="navbar-brand" style="flex: 1; text-align: right;">
+						<a class="navbar-link" href="userPanel.html">Dashboard</a>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+
+	<main class="container mt-5">
+        <section class="loan-quote">
+            <h2 class="text-center">Your Loan Quote</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Car Loan for <span id="vehicleDetails"></span></h3>
+                    <p><strong>Loan Amount:</strong> ₹ <span id="loanAmount"></span></p>
+                    <p><strong>Interest Rate:</strong> 8% (Lowest among competitors)</p>
+                    <p><strong>Monthly EMI:</strong> ₹ <span id="monthlyEMI"></span></p>
+                    <a href="applyLoan.html" class="btn btn-primary">Apply Now</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+	<footer class="bg-dark text-white text-center py-3">
+		<p>&copy; 2024 Vehicle Loan Management. All rights reserved.</p>
+	</footer>
+
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="js/quote.js"></script>
+	<!-- Update the path to your JavaScript file -->
+</body>
+</html>

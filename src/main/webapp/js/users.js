@@ -50,7 +50,7 @@ function windowResize() {
 function logout() {
 	sessionStorage.removeItem('userId');
 
-	window.location.href = 'login.html';
+	window.location.href = 'login.html'; 
 }
 
 $(document).ready(function() {
@@ -58,10 +58,9 @@ $(document).ready(function() {
 
 	if (!userId) {
 		console.error('User is not logged in. Redirecting to login page.');
-		window.location.href = 'login.html';
+		window.location.href = 'login.html'; 
 		return;
 	}
-
 	$.ajax({
 		url: 'http://localhost:8080/api/v1/accepted-loan?userId=' + userId,
 		type: 'GET',
@@ -84,12 +83,10 @@ $(document).ready(function() {
 			}
 			else {
 				var nextInstallmentDate = response.length > 0 ? response[0].scheduledPaymentDate : '-';
-
 				$('#next-installment-date h2 span').text(nextInstallmentDate);
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log("err");
 			console.error('Failed to fetch the next installment date:', textStatus, errorThrown);
 			$('#next-installment-date h2 span').text('-');
 		}
