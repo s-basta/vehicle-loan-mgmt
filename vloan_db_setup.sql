@@ -27,11 +27,13 @@ CREATE TABLE `vloanuser` (
 CREATE TABLE `vloanvehicle` (
   `VehicleID` INT NOT NULL AUTO_INCREMENT,
   `VehicleMake` VARCHAR(50) DEFAULT NULL,
-  `VehicleType` VARCHAR(50) DEFAULT NULL,
+  `VehicleModel` VARCHAR(50) DEFAULT NULL,
   `Ex_Showroom_Price` DOUBLE DEFAULT NULL,
   `On_Road_Price` DOUBLE DEFAULT NULL,
   PRIMARY KEY (`VehicleID`)
 );
+
+/*Post this just add the correct filepath of the dataset in dao/vehicle/ into dao/vehicle/VehicleDatasetReader.java and run that file as a Java Application.*/
 
 CREATE TABLE `vloanapplicant` (
   `applicationID` INT NOT NULL AUTO_INCREMENT,

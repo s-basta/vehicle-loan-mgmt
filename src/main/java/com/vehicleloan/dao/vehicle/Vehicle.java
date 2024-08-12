@@ -6,8 +6,7 @@ public class Vehicle {
 	String vehicleModel;
 	Double exShowroomPrice;
 	Double onRoadPrice;
-	Double roadTax = 1.11; // Assuming 11% roadTax for vehicles priced upto 10 lakhs 
-
+	Double roadTax = 1.11; // Base roadTax for cars less than 10 Lakh
 	public Vehicle(Integer vehicleId, String vehicleMake, String vehicleModel, Double exShowroomPrice) {
 		super();
 		this.vehicleId = vehicleId;

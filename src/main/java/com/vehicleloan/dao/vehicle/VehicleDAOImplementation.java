@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class VehicleDAOImplementation implements VehicleDAO {
 				result.getInt("vehicleId"),
 				result.getString("vehicleMake"),
 				result.getString("vehicleModel"),
-				result.getDouble("ex_Showroom_Price"),		
+				result.getDouble("ex_Showroom_Price"));		
 	}
 	
 	@Override
@@ -97,6 +99,34 @@ public class VehicleDAOImplementation implements VehicleDAO {
 		
 		return vehicles;
 	}
+	
+	// Method to get showroom and on-road prices based on make and model
+	@Override
+	public Map<String, Double> getPricesByMakeAndModel(String make, String model) {
+	    Map<String, Double> prices = new HashMap<>();
+	    
+	    String sql = "SELECT ex_showroom_price, on_road_price FROM vloanVehicle WHERE vehicleMake = ? AND vehicleModel = ?";
+	    
+	    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+	        pst.setString(1, make);
+	        pst.setString(2, model);
+	        
+	        try (ResultSet rs = pst.executeQuery()) {
+	            if (rs.next()) {
+	                double showroomPrice = rs.getDouble("ex_showroom_price");
+	                double onRoadPrice = rs.getDouble("on_road_price");
+	                
+	                prices.put("showroomPrice", showroomPrice);
+	                prices.put("onRoadPrice", onRoadPrice);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return prices;
+	}
+
 
 	@Override
 	public boolean create(Vehicle vehicle) {

@@ -48,14 +48,24 @@ function windowResize() {
 }
 
 function logout() {
-    // Clear userId from sessionStorage
-    sessionStorage.removeItem('userId');
+	// Clear userId from sessionStorage
+	sessionStorage.removeItem('userId');
+	sessionStorage.removeItem('isAdmin');
 
-    // Optionally, redirect the user to a login page or homepage
-    window.location.href = 'login.html'; // Change 'login.html' to your desired URL
+	// Optionally, redirect the user to a login page or homepage
+	window.location.href = 'login.html'; // Change 'login.html' to your desired URL
 }
 
 $(document).ready(function() {
+	// Retrieve userId from sessionStorage
+	var isAdmin = sessionStorage.getItem('isAdmin');
+
+	// Check if userId is available
+	if (!isAdmin) {
+		console.error('Admin is not logged in. Redirecting to login page.');
+		window.location.href = 'login.html'; // Redirect to login if no userId
+		return;
+	}
 	// Show the default page (e.g., dashboard) 
 
 	var table = $('#pending_applicants_table').DataTable({

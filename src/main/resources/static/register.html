@@ -1,97 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Loan Management Application</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Loan Management Application</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="css/homepage.css">
+<link rel="stylesheet" href="css/homepage.css">
 </head>
 <body>
-    <header class="bg-dark text-white p-3">
-        <div class="container">
+	<header class="bg-dark text-white p-3">
+		<div class="container">
 			<nav class="navbar">
-			    <div class="navbar-container">
-			        <div class="navbar-brand"><i class="ion-model-s"></i>
-						<span class="big-logo">GaadiFinance</span></div>
-			        <div class="navbar-menu">
-			            <a class="navbar-link" href="index.html">Home</a>
-			            <a class="navbar-link" href="#features">Features</a>
-			            <a class="navbar-link" href="login.html">Login</a>
-			            <a class="navbar-link" href="register.html">Register</a>
-			        </div>
-			    </div>
+				<div class="navbar-container">
+					<div class="navbar-brand">
+						<i class="ion-model-s"></i> <span class="big-logo">GaadiFinance</span>
+					</div>
+					<div class="navbar-menu">
+						<a class="navbar-link" href="index.html">Home</a> <a
+							class="navbar-link" href="#features">Features</a> <a
+							class="navbar-link" href="login.html">Login</a> <a
+							class="navbar-link" href="register.html">Register</a>
+					</div>
+				</div>
 			</nav>
 
-        </div>
-    </header>
-    <main>    
-        <!-- Register Section -->
-        <section id="register" class="py-5">
-            <h2 class="text-center"><b>Registration Page</b></h2>
-            <div class="container">
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="dob">Date of Birth:</label>
-                        <input type="date" class="form-control" id="dob" name="dob" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender:</label>
-                        <select class="form-control" id="gender" name="gender" required>
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                            <option value="OTHER">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="emailRegister">Email:</label>
-                        <input type="email" class="form-control" id="emailRegister" name="emailRegister" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile">Mobile Number:</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="passwordRegister">Password:</label>
-                        <input type="password" class="form-control" id="passwordRegister" name="passwordRegister" placeholder="Password" required oninput="checkPasswordStrength('passwordRegister', 'register-password-strength')">
-              	  		<p id="register-password-strength"></p>
-                    </div>    
-                    <div class="form-group">          	  
-	              	  <label for="register-confirm-password">Confirm Password:</label>
-	        		  <input type="password" class="form-control" id="register-confirm-password" oninput="checkPasswordMatch('passwordRegister', 'register-confirm-password', 'register-password-match')"><br>
-	        		  <p id="register-password-match"></p>
-	        		</div>
-                    <!-- Hidden field for isAdmin -->
-                    <input type="hidden" id="isAdmin" name="isAdmin" value="false">
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </form>
-                <div id="registerResponse"></div>
-            </div>
-        </section>
-    </main>
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2024 GaadiFinance. All rights reserved.</p>
-    </footer>
+		</div>
+	</header>
+	<main>
+		<!-- Register Section -->
+		<section id="register" class="py-5">
+			<h2 class="text-center">
+				<b>Registration Page</b>
+			</h2>
+			<div class="container">
+				<form id="registerForm">
+					<div class="form-group">
+						<label for="firstName">First Name:</label> <input type="text"
+							class="form-control" id="firstName" name="firstName"
+							placeholder="First Name" required>
+					</div>
+					<div class="form-group">
+						<label for="lastName">Last Name:</label> <input type="text"
+							class="form-control" id="lastName" name="lastName"
+							placeholder="Last Name" required>
+					</div>
+					<div class="form-group">
+						<label for="dob">Date of Birth:</label> <input type="date"
+							class="form-control" id="dob" name="dob" required>
+					</div>
+					<div class="form-group">
+						<label for="gender">Gender:</label> <select class="form-control"
+							id="gender" name="gender" required>
+							<option value="MALE">Male</option>
+							<option value="FEMALE">Female</option>
+							<option value="OTHER">Other</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="username">Username:</label> <input type="text"
+							class="form-control" id="username" name="username"
+							placeholder="Username" required>
+					</div>
+					<div class="form-group">
+						<label for="emailRegister">Email:</label> <input type="email"
+							class="form-control" id="emailRegister" name="emailRegister"
+							placeholder="Email" required>
+					</div>
+					<div class="form-group">
+						<label for="mobile">Mobile Number:</label> <input type="text"
+							class="form-control" id="mobile" name="mobile"
+							placeholder="Mobile Number" required>
+					</div>
+					<div class="form-group">
+						<label for="passwordRegister">Password:</label> <input
+							type="password" class="form-control" id="passwordRegister"
+							name="passwordRegister" placeholder="Password" required
+							oninput="checkPasswordStrength('passwordRegister', 'register-password-strength')">
+						<p id="register-password-strength"></p>
+					</div>
+					<div class="form-group">
+						<label for="register-confirm-password">Confirm Password:</label> <input
+							type="password" class="form-control"
+							id="register-confirm-password"
+							oninput="checkPasswordMatch('passwordRegister', 'register-confirm-password', 'register-password-match')"><br>
+						<p id="register-password-match"></p>
+					</div>
+					<!-- Hidden field for isAdmin -->
+					<input type="hidden" id="isAdmin" name="isAdmin" value="false">
+					<button type="submit" class="btn btn-primary">Register</button>
+				</form>
+				<div id="registerResponse"></div>
+			</div>
+		</section>
+	</main>
+	<footer class="bg-dark text-white text-center py-3">
+		<p>&copy; 2024 GaadiFinance. All rights reserved.</p>
+	</footer>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/register.js"></script> 
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="js/register.js"></script>
 </body>
 </html>

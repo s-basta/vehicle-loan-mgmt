@@ -48,26 +48,26 @@ function windowResize() {
 }
 
 function logout() {
-    // Clear userId from sessionStorage
-    sessionStorage.removeItem('userId');
+	// Clear userId from sessionStorage
+	sessionStorage.removeItem('userId');
 
-    // Optionally, redirect the user to a login page or homepage
-    window.location.href = 'login.html'; // Change 'login.html' to your desired URL
+	// Optionally, redirect the user to a login page or homepage
+	window.location.href = 'login.html'; // Change 'login.html' to your desired URL
 }
 
 $(document).ready(function() {
 	// Retrieve userId from sessionStorage
-	    var userId = sessionStorage.getItem('userId');
+	var userId = sessionStorage.getItem('userId');
 
-	    // Check if userId is available
-	    if (!userId) {
-	        console.error('User is not logged in. Redirecting to login page.');
-	        window.location.href = 'login.html'; // Redirect to login if no userId
-	        return;
-	    }
+	// Check if userId is available
+	if (!userId) {
+		console.error('User is not logged in. Redirecting to login page.');
+		window.location.href = 'login.html'; // Redirect to login if no userId
+		return;
+	}
 	// Show the default page (e.g., dashboard)
 	$.ajax({
-		url: 'http://localhost:8080/api/v1/accepted-loan?userId='+userId, // Your API endpoint
+		url: 'http://localhost:8080/api/v1/accepted-loan?userId=' + userId, // Your API endpoint
 		type: 'GET',
 		success: function(response) {
 			var totalLoans = response.length; // Assuming the API returns an array of loans
@@ -81,24 +81,28 @@ $(document).ready(function() {
 	});
 
 	$.ajax({
-		url: 'http://localhost:8080/api/v1/emi-status/user/1',
+		url: 'http://localhost:8080/api/v1/emi-status/user/' + userId,
 		type: 'GET',
 		success: function(response) {
-			// Assuming response is an array and you need the first scheduledPaymentDate
-			var nextInstallmentDate = response.length > 0 ? response[0].scheduledPaymentDate : '';
-
-			// Update the HTML
-			$('#next-installment-date h2 span').text(nextInstallmentDate);
+			if (response == undefined) {
+				$('#next-installment-date h2 span').text('-');
+			}
+			else {
+				// Assuming response is an array and you need the first scheduledPaymentDate
+				var nextInstallmentDate = response.length > 0 ? response[0].scheduledPaymentDate : '-';
+				// Update the HTML
+				$('#next-installment-date h2 span').text(nextInstallmentDate);
+			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.error('Failed to fetch the next installment date:', textStatus, errorThrown);
-			$('#next-installment-date h2 span').text(''); // Set blank if there's an error
+			$('#next-installment-date h2 span').text('-'); // Set blank if there's an error
 		}
 	});
 
 	$('#installments_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/emi-status/user/"+ userId, // Use dynamic userId
+			"url": "/api/v1/emi-status/user/" + userId, // Use dynamic userId
 			"type": "GET",
 			"dataSrc": function(json) {
 				json.forEach(function(item, index) {
@@ -157,7 +161,7 @@ $(document).ready(function() {
 
 	$('#applications_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/applicant?userId=1", // Replace with your API endpoint
+			"url": "/api/v1/applicant?userId=" + userId, // Replace with your API endpoint
 			"type": "GET",
 			"dataSrc": function(json) {
 				// Return the array of data directly
@@ -189,7 +193,7 @@ $(document).ready(function() {
 	}); // Initialize DataTable
 
 	$.ajax({
-		url: "/api/v1/user/"+ userId, // Use dynamic userId,
+		url: "/api/v1/user/" + userId, // Use dynamic userId,
 		type: 'GET',
 		success: function(response) {
 			// Assuming the response is an object containing user data
@@ -217,7 +221,7 @@ $(document).ready(function() {
 
 		// Construct the user object with the new fields
 		var user = {
-			userId: 1,
+			userId: userId,
 			firstName: $('#firstName').val(),
 			lastName: $('#lastName').val(),
 			dateOfBirth: $('#dateOfBirth').val(),

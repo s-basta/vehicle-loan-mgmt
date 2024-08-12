@@ -1,93 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Loan Management Application</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GaadiFinance</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="css/homepage.css">
+<link rel="stylesheet" href="css/eligibility.css">
 </head>
 <body>
-    <header class="bg-dark text-white p-3">
-        <div class="container">
-			<nav class="navbar">
-			    <div class="navbar-container">
-			        <div class="navbar-brand"><i class="ion-model-s"></i>
-						<span class="big-logo">GaadiFinance</span></div>
-			        <div class="navbar-menu">
-			            <a class="navbar-link" href="userPanel.html">Home</a>
-			            <a class="navbar-link" href="index.html#features">Features</a>
-			        </div>
-			    </div>
-			</nav>
+	<main>
+		<header class="bg-dark text-white p-3">
+			<div class="container">
+				<nav class="navbar">
+					<div class="navbar-container"
+						style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+						<div class="navbar-brand" style="flex: 1; text-align: left;">
+							<i class="ion-model-s"></i> <span class="big-logo">GaadiFinance</span>
+						</div>
+						<div class="navbar-brand"
+							style="flex: 2; text-align: center; flex-grow: 1;">
+							<h2>
+								<b>Check Eligibility</b>
+							</h2>
+						</div>
+						<div class="navbar-brand" style="flex: 1; text-align: right;">
+							<a class="navbar-link" href="userPanel.html">Dashboard</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</header>
 
-        </div>
-    </header>
-    <main>    
-        <!-- User Profile Section -->
-        <section id="profile" class="py-5">
-            <h2 class="text-center"><b>User Profile</b></h2>
-            <div class="container">
-                <form id="userProfileForm">
-                    <div class="form-group">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" class="form-control readonly-field" id="firstName" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" class="form-control readonly-field" id="lastName" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="dateOfBirth">Date of Birth:</label>
-                        <input type="text" class="form-control readonly-field" id="dateOfBirth" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender:</label>
-                        <input type="text" class="form-control readonly-field" id="gender" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control readonly-field" id="username" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control readonly-field" id="email" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile">Mobile Number:</label>
-                        <input type="text" class="form-control readonly-field" id="mobile" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="employmentType">Employment Type:</label>
-                        <input type="text" class="form-control readonly-field" id="employmentType" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="salary">Salary:</label>
-                        <input type="text" class="form-control readonly-field" id="salary" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="panCardNumber">PAN Card Number:</label>
-                        <input type="text" class="form-control readonly-field" id="panCardNumber" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="aadharNumber">Aadhar Number:</label>
-                        <input type="text" class="form-control readonly-field" id="aadharNumber" readonly>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </main>
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2024 GaadiFinance. All rights reserved.</p>
-    </footer>
 
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/eligibility.js"></script>
+		<!-- User Profile Section -->
+		<section id="profile" class="py-5">
+			<p class="text-center">
+				<b>Fill in required info to check eligibility to apply a loan.</b> <br>
+				Profile info can be edited via the `Edit Profile` Button Only.
+			</p>
+			<div class="container">
+				<form id="userProfileForm">
+					<div class="form-group">
+						<label for="firstName">First Name:</label> <input type="text"
+							class="form-control readonly-field" id="firstName" readonly>
+					</div>
+					<div class="form-group">
+						<label for="lastName">Last Name:</label> <input type="text"
+							class="form-control readonly-field" id="lastName" readonly>
+					</div>
+					<div class="form-group">
+						<label for="dateOfBirth">Date of Birth:</label> <input type="text"
+							class="form-control readonly-field" id="dateOfBirth" readonly>
+					</div>
+					<div class="form-group">
+						<label for="gender">Gender:</label> <input type="text"
+							class="form-control readonly-field" id="gender" readonly>
+					</div>
+					<div class="form-group">
+						<label for="username">Username:</label> <input type="text"
+							class="form-control readonly-field" id="username" readonly>
+					</div>
+					<div class="form-group">
+						<label for="email">Email:</label> <input type="email"
+							class="form-control readonly-field" id="email" readonly>
+					</div>
+					<div class="form-group">
+						<label for="mobile">Mobile Number:</label> <input type="text"
+							class="form-control readonly-field" id="mobile" readonly>
+					</div>
+					<div class="form-group">
+						<label for="employmentType">Employment Type:</label> <select
+							class="form-control" id="employmentType"
+							placeholder="Choose Employment Type" required>
+							<option value="SELF_EMPLOYED">SELF_EMPLOYED</option>
+							<option value="SALARIED">SALARIED</option>
+							<option value="HOUSEWIFE">HOUSEWIFE</option>
+							<option value="PENSIONER">PENSIONER</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="salary">Salary:</label> <input type="number"
+							class="form-control" id="salary" value=""
+							placeholder="Enter Annual Income" required>
+					</div>
+					<div class="form-group">
+						<label for="existingEMIs">Existing EMIs (If Any):</label> <input
+							type="number" class="form-control" id="existingEMIs" value=""
+							placeholder="Enter Total Existing Monthly EMIs in INR (If Any)"
+							required>
+					</div>
+
+					<div class="form-group">
+						<label for="vehicleMake">Choose Vehicle Make:</label> <select
+							class="form-control" id="vehicleMake" required>
+							<option value="">Select Vehicle Make</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="vehicleModel">Choose Model:</label> <select
+							class="form-control" id="vehicleModel" required>
+							<option value="">Select Vehicle Make first to see
+								available models</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="showroomPrice">Showroom Price (INR):</label> <input
+							type="text" class="form-control" id="showroomPrice" readonly>
+					</div>
+					<div class="form-group">
+						<label for="onRoadPrice">On-Road Price (INR):</label> <input
+							type="text" class="form-control" id="onRoadPrice" readonly>
+					</div>
+					<div class="form-group">
+						<label for="loanTenureMonths">Loan Tenure (Months) :</label> <input
+							type="number" value="" class="form-control" id="loanTenureMonths">
+					</div>
+					<button type="submit" class="btn btn-primary" id="getEligibility">Get
+						Eligibility</button>
+				</form>
+			</div>
+			<!-- Eligibility Modal -->
+			<div class="modal fade" id="eligibilityModal" tabindex="-1"
+				role="dialog" aria-labelledby="eligibilityModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="eligibilityModalLabel">Eligibility
+								Status</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="modalBody">
+							<!-- Content will be set dynamically -->
+						</div>
+						<div class="modal-footer" id="modalFooter">
+							<!-- Buttons will be set dynamically -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</section>
+	</main>
+	<footer class="bg-dark text-white text-center py-3">
+		<p>&copy; 2024 GaadiFinance. All rights reserved.</p>
+	</footer>
+
+	<!-- jQuery and Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="js/eligibility.js"></script>
 </body>
 </html>
