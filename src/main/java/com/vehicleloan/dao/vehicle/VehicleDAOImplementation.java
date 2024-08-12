@@ -26,7 +26,7 @@ public class VehicleDAOImplementation implements VehicleDAO {
 		return new Vehicle(
 				result.getInt("vehicleId"),
 				result.getString("vehicleMake"),
-				result.getString("vehicleModel"),
+				result.getString("vehicleType"),
 				result.getDouble("ex_Showroom_Price"));		
 	}
 	
@@ -105,7 +105,7 @@ public class VehicleDAOImplementation implements VehicleDAO {
 	public Map<String, Double> getPricesByMakeAndModel(String make, String model) {
 	    Map<String, Double> prices = new HashMap<>();
 	    
-	    String sql = "SELECT ex_showroom_price, on_road_price FROM vloanVehicle WHERE vehicleMake = ? AND vehicleModel = ?";
+	    String sql = "SELECT ex_showroom_price, on_road_price FROM vloanVehicle WHERE vehicleMake = ? AND vehicleType = ?";
 	    
 	    try (PreparedStatement pst = conn.prepareStatement(sql)) {
 	        pst.setString(1, make);
@@ -133,7 +133,7 @@ public class VehicleDAOImplementation implements VehicleDAO {
 		// TODO Auto-generated method stub
 		try {
 			String sql = "INSERT INTO `vloanVehicle` (" +
-	                "`vehicleMake`, `vehicleModel`, `ex_showroom_price`, `on_road_price`) " +
+	                "`vehicleMake`, `vehicleType`, `ex_showroom_price`, `on_road_price`) " +
 	                "VALUES (?, ?, ?, ?)";
 			PreparedStatement pst = conn.prepareStatement(sql);
 					
@@ -165,7 +165,7 @@ public class VehicleDAOImplementation implements VehicleDAO {
             parameters.add(vehicle.getVehicleMake());
         }
         if (vehicle.getVehicleModel() != null) {
-            setClauses.add("vehicleModel = ? ");
+            setClauses.add("vehicleType = ? ");
             parameters.add(vehicle.getVehicleModel());
         }
         if (vehicle.getExShowroomPrice() != null) {

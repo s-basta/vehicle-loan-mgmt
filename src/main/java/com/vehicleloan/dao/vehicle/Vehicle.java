@@ -3,15 +3,15 @@ package com.vehicleloan.dao.vehicle;
 public class Vehicle {
 	Integer vehicleId;
 	String vehicleMake;
-	String vehicleModel;
+	String vehicleType;
 	Double exShowroomPrice;
 	Double onRoadPrice;
 	Double roadTax = 1.11; // Base roadTax for cars less than 10 Lakh
-	public Vehicle(Integer vehicleId, String vehicleMake, String vehicleModel, Double exShowroomPrice) {
+	public Vehicle(Integer vehicleId, String vehicleMake, String vehicleType, Double exShowroomPrice) {
 		super();
 		this.vehicleId = vehicleId;
 		this.vehicleMake = vehicleMake;
-		this.vehicleModel = vehicleModel;
+		this.vehicleType = vehicleType;
 		this.exShowroomPrice = exShowroomPrice;
 		// Using data for road tax in Mumbai
 		// The tax rate is 11% of the vehicle cost for vehicles priced up to 10 lakhs. 
@@ -45,11 +45,11 @@ public class Vehicle {
 	}
 
 	public String getVehicleModel() {
-		return vehicleModel;
+		return vehicleType;
 	}
 
 	public void setVehicleModel(String vehicleModel) {
-		this.vehicleModel = vehicleModel;
+		this.vehicleType = vehicleModel;
 	}
 
 	public Double getExShowroomPrice() {
@@ -70,7 +70,7 @@ public class Vehicle {
 
 	@Override
 	public String toString() {
-		return "Vehicle [vehicleId=" + vehicleId + ", vehicleMake=" + vehicleMake + ", vehicleType=" + vehicleModel
+		return "Vehicle [vehicleId=" + vehicleId + ", vehicleMake=" + vehicleMake + ", vehicleType=" + vehicleType
 				+ ", exShowroomPrice=" + exShowroomPrice + ", onRoadPrice=" + onRoadPrice + "]";
 	}
 	

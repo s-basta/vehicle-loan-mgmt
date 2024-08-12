@@ -112,7 +112,8 @@ $(document).ready(function() {
 						type: 'GET',
 						async: false, // Make it synchronous
 						success: function(response) {
-							item.vehicleMake = response.vehicleMake; // Assuming the response contains a `vehicleMake` field
+							item.vehicleMake = response.vehicleMake;
+							item.vehicleType = response.vehicleType; // Assuming the response contains a `vehicleMake` field
 						},
 						error: function() {
 							item.vehicleMake = 'N/A'; // Fallback in case of error
@@ -149,6 +150,9 @@ $(document).ready(function() {
 		}, {
 			"data": "vehicleMake",
 			"title": "Car Make"
+		}, {
+			"data": "vehicleType",
+			"title": "Car Model"
 		}, {
 			"data": "emiAmount",
 			"title": "EMI Amount"
