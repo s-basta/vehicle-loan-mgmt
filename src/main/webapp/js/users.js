@@ -48,31 +48,26 @@ function windowResize() {
 }
 
 function logout() {
-	// Clear userId from sessionStorage
 	sessionStorage.removeItem('userId');
 
-	// Optionally, redirect the user to a login page or homepage
-	window.location.href = 'login.html'; // Change 'login.html' to your desired URL
+	window.location.href = 'login.html';
 }
 
 $(document).ready(function() {
-	// Retrieve userId from sessionStorage
 	var userId = sessionStorage.getItem('userId');
 
-	// Check if userId is available
 	if (!userId) {
 		console.error('User is not logged in. Redirecting to login page.');
-		window.location.href = 'login.html'; // Redirect to login if no userId
+		window.location.href = 'login.html';
 		return;
 	}
-	// Show the default page (e.g., dashboard)
+
 	$.ajax({
-		url: 'http://localhost:8080/api/v1/accepted-loan?userId=' + userId, // Your API endpoint
+		url: 'http://localhost:8080/api/v1/accepted-loan?userId=' + userId,
 		type: 'GET',
 		success: function(response) {
-			var totalLoans = response.length; // Assuming the API returns an array of loans
+			var totalLoans = response.length;
 
-			// Update the number in the HTML
 			$('#total-loans-card .card-block h2 span').text(totalLoans);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
@@ -88,62 +83,57 @@ $(document).ready(function() {
 				$('#next-installment-date h2 span').text('-');
 			}
 			else {
-				// Assuming response is an array and you need the first scheduledPaymentDate
 				var nextInstallmentDate = response.length > 0 ? response[0].scheduledPaymentDate : '-';
 
-				// Update the HTML
 				$('#next-installment-date h2 span').text(nextInstallmentDate);
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("err");
 			console.error('Failed to fetch the next installment date:', textStatus, errorThrown);
-			$('#next-installment-date h2 span').text('-'); // Set blank if there's an error
+			$('#next-installment-date h2 span').text('-');
 		}
 	});
 
 	$('#installments_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/emi-status/user/" + userId, // Use dynamic userId
+			"url": "/api/v1/emi-status/user/" + userId,
 			"type": "GET",
 			"dataSrc": function(json) {
 				json.forEach(function(item, index) {
-					// Fetch vehicleMake based on applicationId
 					$.ajax({
-						url: '/api/v1/applicant/' + item.applicationId, // API endpoint to get the vehicleMake
+						url: '/api/v1/applicant/' + item.applicationId,
 						type: 'GET',
-						async: false, // Make it synchronous
+						async: false,
 						success: function(response) {
-							item.vehicleMake = response.vehicleMake; // Assuming the response contains a `vehicleMake` field
+							item.vehicleMake = response.vehicleMake;
 						},
 						error: function() {
-							item.vehicleMake = 'N/A'; // Fallback in case of error
+							item.vehicleMake = 'N/A';
 						}
 					});
 
-					// Fetch EMI amount based on applicationId
 					$.ajax({
-						url: '/api/v1/accepted-loan/' + item.applicationId, // Replace with your API endpoint to get the EMI amount
+						url: '/api/v1/accepted-loan/' + item.applicationId,
 						type: 'GET',
-						async: false, // Make it synchronous
+						async: false,
 						success: function(response) {
-							item.emiAmount = response.emiAmount; // Assuming the response contains an `emiAmount` field
+							item.emiAmount = response.emiAmount;
 						},
 						error: function() {
-							item.emiAmount = 'N/A'; // Fallback in case of error
+							item.emiAmount = 'N/A';
 						}
 					});
 				});
 
-				// Now the json array has the updated vehicleMake and emiAmount
 				return json;
 			}
 		},
 		"columns": [{
-			"data": null, // Data is not coming from the API
+			"data": null,
 			"title": "Sr.No.",
 			"render": function(data, type, row, meta) {
-				return meta.row + 1; // Serial number starts from 1
+				return meta.row + 1;
 			}
 		}, {
 			"data": "applicationId",
@@ -163,18 +153,17 @@ $(document).ready(function() {
 
 	$('#applications_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/applicant?userId=" + userId, // Replace with your API endpoint
+			"url": "/api/v1/applicant?userId=" + userId,
 			"type": "GET",
 			"dataSrc": function(json) {
-				// Return the array of data directly
 				return json;
 			}
 		},
 		"columns": [{
-			"data": null, // Data is not coming from the API
+			"data": null,
 			"title": "Sr.No.",
 			"render": function(data, type, row, meta) {
-				return meta.row + 1; // Serial number starts from 1
+				return meta.row + 1;
 			}
 		}, {
 			"data": "applicationID",
@@ -192,13 +181,12 @@ $(document).ready(function() {
 			"data": "applicationDate",
 			"title": "Applied On"
 		}]
-	}); // Initialize DataTable
+	});
 
 	$.ajax({
-		url: "/api/v1/user/" + userId, // Use dynamic userId,
+		url: "/api/v1/user/" + userId,
 		type: 'GET',
 		success: function(response) {
-			// Assuming the response is an object containing user data
 			$('#firstName').val(response.firstName);
 			$('#lastName').val(response.lastName);
 			$('#dateOfBirth').val(response.dateOfBirth);
@@ -213,7 +201,6 @@ $(document).ready(function() {
 		},
 		error: function(error) {
 			console.error('Error fetching user data:', error);
-			// Handle the error case here, e.g., show an alert or a message
 		}
 	});
 
@@ -221,7 +208,6 @@ $(document).ready(function() {
 	$('#edit_changes').on('click', function(e) {
 		e.preventDefault();
 
-		// Construct the user object with the new fields
 		var user = {
 			userId: userId,
 			firstName: $('#firstName').val(),
@@ -229,22 +215,21 @@ $(document).ready(function() {
 			dateOfBirth: $('#dateOfBirth').val(),
 			gender: $('#gender').val(),
 			email: $('#email').val(),
-			mobile: $('#mobile').val(), // Added mobile field
+			mobile: $('#mobile').val(),
 			typeOfEmployment: $('#employmentType').val(),
 			salary: $('#salary').val(),
 			panCardNumber: $('#panCardNumber').val() || null,
 			aadharNumber: $('#aadharNumber').val() || null,
 		};
-		// Make the AJAX POST request
+
 		$.ajax({
 			url: '/api/v1/user',
 			type: 'PUT',
 			contentType: 'application/json',
 			data: JSON.stringify(user),
 			success: function(response) {
-				console.log(response); // For debugging
+				console.log(response);
 				$('#registerResponse').text('Registration successful! Response ID: ' + response.id);
-				/*window.location.href = 'userPanel.html';*/
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.error('AJAX request failed:', textStatus, errorThrown);

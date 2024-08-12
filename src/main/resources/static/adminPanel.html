@@ -258,25 +258,20 @@
 		src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 	<script src="js/admin.js"></script>
 	<script type="text/javascript">
-		// Initialize DataTable
 
 		$(document).ready(function() {
 
 			$('#dashboard').show();
 
 			$('#left-menu li > a').click(function(e) {
-				e.preventDefault(); // Prevent default action
+				e.preventDefault(); 
 
-				// Get the ID of the corresponding content section
 				var targetId = $(this).attr('href').substring(1);
 
-				// Hide all content sections
 				$('.page-content').hide();
 
-				// Show the selected content section
 				$('#' + targetId).show();
 
-				// Set active class on the clicked item
 				$('#left-menu li').removeClass('active');
 				$(this).parent().addClass('active');
 			});
