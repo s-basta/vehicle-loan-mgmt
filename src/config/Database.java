@@ -14,7 +14,7 @@ public class Database {
 		try {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			
-			CONN = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "password");
+			CONN = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "@Cricket1603");
 			
 			return CONN;
 		}

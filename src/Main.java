@@ -1,9 +1,14 @@
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
+import org.junit.jupiter.api.Test;
 
 import constants.Gender;
 import dao.acc.AcceptedLoan;
@@ -298,31 +303,32 @@ public class Main {
 	}
 
 	// Methods for AcceptedLoans
+	
+	@Test
 	public static void createAcceptedLoan(AcceptedLoan acceptedLoan) {
 	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
 
 	    // Directly call the insert method in DAO
+	    assertNotNull(acceptedLoan);
 	    acceptedLoansDAO.insertAcceptedLoan(acceptedLoan);
 	    System.out.println("Accepted Loan Created Successfully");
 	}
 
+	@Test
 	public static void getAcceptedLoanById(int id) {
 	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
 	    AcceptedLoan acceptedLoan = acceptedLoansDAO.getAcceptedLoanById(id);
+	    assertNotNull(acceptedLoan);
 
-	    if (acceptedLoan != null) {
-	        System.out.println("Accepted Loan Details:");
-	        System.out.println("Loan ID: " + acceptedLoan.getLoanID());
-	        System.out.println("Application ID: " + acceptedLoan.getApplicationID());
-	        System.out.println("User ID: " + acceptedLoan.getUserID());
-	        System.out.println("EMI Amount: " + acceptedLoan.getEmiAmount());
-	        System.out.println("Total EMIs: " + acceptedLoan.getTotalEMIs());
-	        System.out.println("Paid EMIs: " + acceptedLoan.getPaidEMIs());
-	        System.out.println("Loan Start Date: " + acceptedLoan.getLoanStartDate());
-	        System.out.println("Loan End Date: " + acceptedLoan.getLoanEndDate());
-	    } else {
-	        System.out.println("Accepted Loan not found for Loan ID: " + id);
-	    }
+	    System.out.println("Accepted Loan Details:");
+		System.out.println("Loan ID: " + acceptedLoan.getLoanID());
+		System.out.println("Application ID: " + acceptedLoan.getApplicationID());
+		System.out.println("User ID: " + acceptedLoan.getUserID());
+		System.out.println("EMI Amount: " + acceptedLoan.getEmiAmount());
+		System.out.println("Total EMIs: " + acceptedLoan.getTotalEMIs());
+		System.out.println("Paid EMIs: " + acceptedLoan.getPaidEMIs());
+		System.out.println("Loan Start Date: " + acceptedLoan.getLoanStartDate());
+		System.out.println("Loan End Date: " + acceptedLoan.getLoanEndDate());
 	}
 
 	public static void getAllAcceptedLoans() {
@@ -334,55 +340,46 @@ public class Main {
 	    }
 	}
 
+	@Test
 	public static void updateAcceptedLoan(int id, AcceptedLoan newAcceptedLoan) {
 	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
 	    AcceptedLoan existingAcceptedLoan = acceptedLoansDAO.getAcceptedLoanById(id);
-
-	    if (existingAcceptedLoan != null) {
-	        // Call update method in DAO
-	        acceptedLoansDAO.updateAcceptedLoan(newAcceptedLoan);
-	        System.out.println("Accepted Loan record updated successfully.");
-	    } else {
-	        System.out.println("Accepted Loan record not found.");
-	    }
+	    assertNotNull(existingAcceptedLoan);
+	    acceptedLoansDAO.updateAcceptedLoan(newAcceptedLoan);
+		System.out.println("Accepted Loan record updated successfully.");
 	}
-
+	
+	@Test
 	public static void deleteAcceptedLoan(int id) {
 	    AcceptedLoansDAO acceptedLoansDAO = new AcceptedLoansDAOImpl();
 	    AcceptedLoan existingAcceptedLoan = acceptedLoansDAO.getAcceptedLoanById(id);
-
-	    if (existingAcceptedLoan != null) {
-	        // Call delete method in DAO
-	        acceptedLoansDAO.deleteAcceptedLoan(id);
-	        System.out.println("Accepted Loan record deleted successfully.");
-	    } else {
-	        System.out.println("Accepted Loan record not found.");
-	    }
-	}
+	    assertNull(existingAcceptedLoan);
+	    System.out.println("Accepted Loan record not found.");
+	}	
 	
 	
 	// Create Loan Status
+	@Test
 	public static void createLoanStatus(LoanStatus loanStatus) {
 	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
+	    assertNotNull(loanStatus);
 	    loanStatusDAO.insertLoanStatus(loanStatus);
 	    System.out.println("Loan Status Created Successfully");
 	}
 
 	// Get Loan Status by ID
+	@Test
 	public static void getLoanStatusById(int id) {
 	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
 	    LoanStatus loanStatus = loanStatusDAO.getLoanStatusById(id);
+	    assertNotNull(loanStatus);
 
-	    if (loanStatus != null) {
-	        System.out.println("Loan Status Details:");
-	        System.out.println("Status ID: " + loanStatus.getStatusID());
-	        System.out.println("Loan ID: " + loanStatus.getLoanID());
-	        System.out.println("Current EMI: " + loanStatus.getCurrentEMI());
-	        System.out.println("Payment Status: " + loanStatus.getPaymentStatus());
-	        System.out.println("Payment Date: " + loanStatus.getPaymentDate());
-	    } else {
-	        System.out.println("Loan Status not found for Status ID: " + id);
-	    }
+	    System.out.println("Loan Status Details:");
+		System.out.println("Status ID: " + loanStatus.getStatusID());
+		System.out.println("Loan ID: " + loanStatus.getLoanID());
+		System.out.println("Current EMI: " + loanStatus.getCurrentEMI());
+		System.out.println("Payment Status: " + loanStatus.getPaymentStatus());
+		System.out.println("Payment Date: " + loanStatus.getPaymentDate());
 	}
 
 	// Get All Loan Statuses
@@ -396,17 +393,20 @@ public class Main {
 	}
 
 	// Update Loan Status
+	@Test
 	public static void updateLoanStatus(LoanStatus loanStatus) {
 	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
+	    assertNotNull(loanStatus);
 	    loanStatusDAO.updateLoanStatus(loanStatus);
 	    System.out.println("Loan Status Updated Successfully");
 	}
 
 	// Delete Loan Status
+	@Test
 	public static void deleteLoanStatus(int id) {
 	    LoanStatusDAO loanStatusDAO = new LoanStatusDAOImpl();
 	    loanStatusDAO.deleteLoanStatus(id);
-	    System.out.println("Loan Status Deleted Successfully");
+	    assertNull(loanStatusDAO);
 	}
 
 
@@ -443,29 +443,29 @@ public class Main {
 		
 		// Prateek
 	
-		// 1) Example for AcceptedLoans
-//		AcceptedLoan acceptedLoan = new AcceptedLoan(7, 1, 2, 5000,	12,	3, new Date(), new Date()); // LoanStartDate
-//		createAcceptedLoan(acceptedLoan);
+//		 1) Example for AcceptedLoans
+		AcceptedLoan acceptedLoan = new AcceptedLoan(8, 1, 2, 5000,	12,	3, new Date(), new Date()); // LoanStartDate
+		createAcceptedLoan(acceptedLoan);
 //		getAcceptedLoanById(1);
 //		getAllAcceptedLoans();
 //		updateAcceptedLoan(1, acceptedLoan);
 //		deleteAcceptedLoan(1);
-		
-		
-//		2) Example for LoanStatus
+//		
+//		
+////		2) Example for LoanStatus
 //		LoanStatus loanStatus = new LoanStatus(1, 0, 0, "Pending", new Date());
 //        createLoanStatus(loanStatus);
 //        getLoanStatusById(1);
 //        getAllLoanStatuses();
-
-//        // Example update of LoanStatus
+//
+////        // Example update of LoanStatus
 //        loanStatus.setPaymentStatus("Approved");
 //        updateLoanStatus(loanStatus);
-//
-//        // Example delete of LoanStatus
+////
+////        // Example delete of LoanStatus
 //        deleteLoanStatus(2);
-//
-//        // Continue with other functionalities as needed
+////
+////        // Continue with other functionalities as needed
 //        registerUser();
 //        showUsers();
 //        // Add other method calls as needed for testing

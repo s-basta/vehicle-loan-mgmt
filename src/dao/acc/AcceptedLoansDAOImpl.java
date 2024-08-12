@@ -71,7 +71,7 @@ public class AcceptedLoansDAOImpl implements AcceptedLoansDAO {
     }
 
     @Override
-    public void deleteAcceptedLoan(int loanID) {
+    public boolean deleteAcceptedLoan(int loanID) {
         try {
             String query = "DELETE FROM AcceptedLoans WHERE LoanID = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -80,6 +80,7 @@ public class AcceptedLoansDAOImpl implements AcceptedLoansDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+		return false;
     }
 
     @Override
@@ -115,4 +116,10 @@ public class AcceptedLoansDAOImpl implements AcceptedLoansDAO {
         }
         return loans;
     }
+
+	@Override
+	public Connection getConnection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

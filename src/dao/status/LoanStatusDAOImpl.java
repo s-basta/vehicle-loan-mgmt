@@ -62,7 +62,7 @@ public class LoanStatusDAOImpl implements LoanStatusDAO {
     }
 
     @Override
-    public void deleteLoanStatus(int statusID) {
+    public boolean deleteLoanStatus(int statusID) {
         try {
             String query = "DELETE FROM LoanStatus WHERE StatusID = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -71,6 +71,7 @@ public class LoanStatusDAOImpl implements LoanStatusDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+		return false;
     }
 
     @Override
@@ -106,4 +107,9 @@ public class LoanStatusDAOImpl implements LoanStatusDAO {
         }
         return statuses;
     }
+
+	public Connection getConnection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
