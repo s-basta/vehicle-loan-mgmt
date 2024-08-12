@@ -26,7 +26,7 @@ public class UserDAOImplementation implements UserDAO{
         if(conn != null) this.conn = conn;
     }
 	
-	public User resultSetToUserConvertor(ResultSet resultSet) throws SQLException {
+	private User resultSetToUserConvertor(ResultSet resultSet) throws SQLException {
 		return new User(
                 resultSet.getInt("userId"),
                 resultSet.getString("firstName"),
@@ -77,15 +77,14 @@ public class UserDAOImplementation implements UserDAO{
 		return user;
 	}
 
-	
 	@Override
-	public boolean create(User user) {
+	public Integer create(User user) {
 		try {
 			String sql = "INSERT INTO `vloanUser` (" +
 	                "`firstName`, `lastName`, `dateOfBirth`, `gender`, `username`, `email`, `mobile`, " +
 	                "`password`, `isAdmin`, `typeOfEmployment`, `salary`, `panCardNumber`, `aadharNumber`) " +
 	                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement pst = conn.prepareStatement(sql);
+			PreparedStatement pst = conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
 					
 			pst.setString(1, user.getFirstName());
             pst.setString(2, user.getLastName());
@@ -110,14 +109,21 @@ public class UserDAOImplementation implements UserDAO{
             else pst.setNull(13, java.sql.Types.VARCHAR);
             
             int rows = pst.executeUpdate();
-            if(rows > 0) return true;
+            if(rows > 0){
+                try (ResultSet rs = pst.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // Return the generated userId
+                    }
+                }
+            }
         }catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return false;
+		return null;
 	}
-	@Override
+
+    @Override
 	public User get(Integer userId) {
 		User user = null;
 		

@@ -52,9 +52,9 @@ public class UserController {
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<?> createUser(@RequestBody User newUser) {
-		boolean isCreated = userDAO.create(newUser);
+		Integer userId = userDAO.create(newUser);
 
-		if (!isCreated)
+		if (userId == null)
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
 		return new ResponseEntity<>(HttpStatus.OK);

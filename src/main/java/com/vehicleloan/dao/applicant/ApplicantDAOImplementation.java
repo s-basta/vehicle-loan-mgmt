@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,29 +13,18 @@ import org.springframework.stereotype.Service;
 
 import com.vehicleloan.config.Database;
 import com.vehicleloan.constant.LoanStatus;
-import com.vehicleloan.constant.PaymentStatus;
 import com.vehicleloan.constant.TypeOfEmployment;
-import com.vehicleloan.dao.acceptedLoan.AcceptedLoan;
-import com.vehicleloan.dao.acceptedLoan.AcceptedLoanDAO;
-import com.vehicleloan.dao.emiStatus.EMIStatus;
-import com.vehicleloan.dao.emiStatus.EMIStatusDAO;
 import com.vehicleloan.dao.user.User;
 import com.vehicleloan.dao.user.UserDAO;
-import com.vehicleloan.utils.DateUtils;
-import com.vehicleloan.utils.EMIUtils;
 
 @Service
 public class ApplicantDAOImplementation implements ApplicantDAO {
     private Connection conn;
     private UserDAO userDAO;
-    private AcceptedLoanDAO acceptedLoanDAO;
-    private EMIStatusDAO emiStatusDAO;
 
-    public ApplicantDAOImplementation(UserDAO userDAO, AcceptedLoanDAO acceptedLoanDAO, EMIStatusDAO emiStatusDAO) {
+    public ApplicantDAOImplementation(UserDAO userDAO) {
         conn = Database.getConnection();
         this.userDAO = userDAO;
-        this.acceptedLoanDAO = acceptedLoanDAO;
-        this.emiStatusDAO = emiStatusDAO;
     }
 
     private Applicant resultSetToApplicantConvertor(ResultSet result) throws SQLException {
@@ -67,12 +57,12 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
     }
 
     @Override
-    public boolean create(Applicant applicant) {
+    public Integer create(Applicant applicant) {
         String sql = "INSERT INTO vloanApplicant (userID, vehicleMake, vehicleType, exShowroomPrice, onRoadPrice, typeOfEmployment, yearlySalary, existingEMI, mobileNumber, emailID, houseNumber, streetName, city, state, pinCode, loanAmount, loanTenure, rateOfInterest, loanStatus, applicationDate) "
                 +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement pst = conn.prepareStatement(sql)) {
+        try (PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pst.setInt(1, applicant.getUserID());
             pst.setString(2, applicant.getVehicleMake());
             pst.setString(3, applicant.getVehicleType());
@@ -95,12 +85,18 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
             pst.setDate(20, new Date(applicant.getApplicationDate().getTime()));
 
             int rows = pst.executeUpdate();
-            return rows > 0;
+            if(rows > 0){
+                try (ResultSet rs = pst.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // Return the generated userId
+                    }
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     @Override
@@ -162,11 +158,11 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
             parameters.add(applicant.getUserID());
         }
         if (applicant.getVehicleMake() != null) {
-            setClauses.add("carMake = ? ");
+            setClauses.add("vehicleMake = ? ");
             parameters.add(applicant.getVehicleMake());
         }
         if (applicant.getVehicleType() != null) {
-            setClauses.add("carModel = ? ");
+            setClauses.add("vehicleType = ? ");
             parameters.add(applicant.getVehicleType());
         }
         if (applicant.getExShowroomPrice() != null) {
@@ -247,40 +243,7 @@ public class ApplicantDAOImplementation implements ApplicantDAO {
             }
 
             int rows = pst.executeUpdate();
-            if (applicant.getLoanStatus() == LoanStatus.APPROVED) {
-                emiStatusDAO.deleteByApplicationId(applicant.getApplicationID());
-
-                Applicant currentApplicant = get(applicant.getApplicationID());
-                
-                Double emiAmount = EMIUtils.calculateEMI(currentApplicant.getLoanAmount(), currentApplicant.getRateOfInterest() / (double) 100, currentApplicant.getLoanTenure());
-                
-                AcceptedLoan acceptedLoan = acceptedLoanDAO.get(currentApplicant.getApplicationID());
-                if(acceptedLoan == null)
-                    acceptedLoanDAO.create(new AcceptedLoan(currentApplicant.getApplicationID(),
-                            emiAmount,
-                            currentApplicant.getLoanTenure(),
-                            new java.util.Date(), DateUtils.addMonths(DateUtils.addMonths(new java.util.Date(), 1),
-                                    currentApplicant.getLoanTenure() + 1)));
-                else
-                    acceptedLoanDAO.update(new AcceptedLoan(currentApplicant.getApplicationID(),
-                    emiAmount,
-                    currentApplicant.getLoanTenure(),
-                    new java.util.Date(), DateUtils.addMonths(DateUtils.addMonths(new java.util.Date(), 1),
-                            currentApplicant.getLoanTenure() + 1)));
-                            
-                int numberOfEMIs = currentApplicant.getLoanTenure();
-                java.util.Date startDate = DateUtils.addMonths(new java.util.Date(), 1);
-
-                for (int month = 1; month <= numberOfEMIs; month++) {
-                    emiStatusDAO.create(
-                            new EMIStatus(null, currentApplicant.getApplicationID(), PaymentStatus.PENDING,
-                                    DateUtils.addMonths(startDate, month), null));
-                }
-
-            } else if (applicant.getLoanStatus() == LoanStatus.REJECTED) {
-                acceptedLoanDAO.delete(applicant.getApplicationID());
-            }
-
+            System.out.println(rows);
             return rows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
