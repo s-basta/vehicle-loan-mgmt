@@ -100,9 +100,50 @@ $(document).ready(function() {
 		}
 	});
 
+	$.ajax({
+		url: 'http://localhost:8080/api/v1/emi-status/user/' + userId + '?paymentStatus=COMPLETED',
+		type: 'GET',
+		success: function(response) {
+			if (response === undefined || response.length === 0) {
+				$('#no_installments_paid h2 span').text('0');
+			} else {
+				// Number of completed installments
+				var completedInstallmentsCount = response.length;
+				console.log("completed",completedInstallmentsCount);
+				// Update the HTML
+				$('#no_installments_paid h2 span').text(completedInstallmentsCount);
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error('Failed to fetch the number of completed installments:', textStatus, errorThrown);
+			$('#no_installments_paid h2 span').text('0'); // Set to '0' if there's an error
+		}
+	});
+
+	$.ajax({
+		url: 'http://localhost:8080/api/v1/emi-status/user/' + userId + '?paymentStatus=PENDING',
+		type: 'GET',
+		success: function(response) {
+			if (response === undefined || response.length === 0) {
+				$('#no_installments_pending h2 span').text('0');
+			} else {
+				// Number of completed installments
+				var pendingInstallmentsCount = response.length;
+
+				console.log("pending",pendingInstallmentsCount);
+				// Update the HTML
+				$('#no_installments_pending h2 span').text(pendingInstallmentsCount);
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error('Failed to fetch the number of completed installments:', textStatus, errorThrown);
+			$('#no_installments_pending h2 span').text('0'); // Set to '0' if there's an error
+		}
+	});
+
 	$('#installments_table').DataTable({
 		"ajax": {
-			"url": "/api/v1/emi-status/user/" + userId, // Use dynamic userId
+			"url": "/api/v1/emi-status/user/" + userId + "?paymentStatus=PENDING", // Use dynamic userId
 			"type": "GET",
 			"dataSrc": function(json) {
 				json.forEach(function(item, index) {

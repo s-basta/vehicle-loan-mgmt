@@ -261,7 +261,7 @@ $(document).ready(function() {
 		]
 	});
 
-	$('#a_applications_table').DataTable({
+	var table_accepted = $('#a_applications_table').DataTable({
 		"ajax": {
 			"url": '/api/v1/applicant?status=APPROVED',
 			"type": "GET",
@@ -300,6 +300,15 @@ $(document).ready(function() {
 			{ "data": "loanTenure", "title": "Loan Tenure" },
 			{ "data": "applicationDate", "title": "Applied On" }
 		]
+	});
+
+	$('#a_applications_table tbody').on('click', 'tr', function() {
+		var data = table_accepted.row(this).data();
+		var applicationID = data.applicationID;
+		var username = data.username;
+
+		// Redirect to the new page with applicationID as a query parameter
+		window.location.href = 'installments.html?applicationID=' + applicationID +"&username="+ username;
 	});
 
 	$('#r_applications_table').DataTable({
