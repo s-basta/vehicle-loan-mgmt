@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Installment Details</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/installments.css">
+</head>
+<body>
+	<div id="logo">
+		<i class="ion-model-s"></i> <span class="big-logo">GadiFinance</span>
+		<span class="small-logo">GF</span>
+	</div>
+	<div id="main-content">
+		<div id="header">
+			<div class="header-left float-left">
+				<a href="adminPanel.html" class="btn btn-primary">Back to Dashboard</a>
+			</div>
+		</div>
+		<div id="page-container">
+			<div id="installments-details" class="page-content">
+				<div class="card">
+					<div class="title">Installment Details</div>
+					<div class="title">
+						<table id="installments_status_table" class="display"
+							style="width: 100%">
+							<thead>
+								<tr>
+									<th>Sr. No.</th>
+									<th>Loan ID</th>
+									<th>Car Make</th>
+									<th>Car Model</th>
+									<th>EMI Amount</th>
+									<th>Payment Date</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Data will be populated by DataTables -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery, Bootstrap JS, and DataTables JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+	$(document).ready(function() {
+		// Function to get the query parameter value by name
+	    function getQueryParam(name) {
+	        const urlParams = new URLSearchParams(window.location.search);
+	        return urlParams.get(name);
+	    }
+
+	    // Retrieve applicationID from the URL
+	    var applicationID = getQueryParam('applicationID');
+	    if (!applicationID) {
+	        console.error('Application ID not found in URL');
+	        return; // Exit if no applicationID is found
+	    }
+
+	    $('#installments_status_table').DataTable({
+	    	"ajax": {
+				"url": "/api/v1/emi-status/" + applicationID, // Use dynamic userId
+				"type": "GET",
+				"dataSrc": function(json) {
+					console.log("Data received:", json);
+
+					json.forEach(function(item, index) {
+						// Fetch vehicleMake based on applicationId
+						$.ajax({
+							url: '/api/v1/applicant/' + item.applicationId, // API endpoint to get the vehicleMake
+							type: 'GET',
+							async: false, // Make it synchronous
+							success: function(response) {
+								item.vehicleMake = response.vehicleMake;
+								item.vehicleType = response.vehicleType; // Assuming the response contains a `vehicleMake` field
+							},
+							error: function() {
+								item.vehicleMake = 'N/A'; // Fallback in case of error
+							}
+						});
+
+						// Fetch EMI amount based on applicationId
+						$.ajax({
+							url: '/api/v1/accepted-loan/' + item.applicationId, // Replace with your API endpoint to get the EMI amount
+							type: 'GET',
+							async: false, // Make it synchronous
+							success: function(response) {
+								item.emiAmount = response.emiAmount; // Assuming the response contains an `emiAmount` field
+							},
+							error: function() {
+								item.emiAmount = 'N/A'; // Fallback in case of error
+							}
+						});
+					});
+
+					// Now the json array has the updated vehicleMake and emiAmount
+					return json;
+				}
+			},
+	        "columns": [
+	            {
+	                "data": null,
+	                "title": "Sr. No.",
+	                "render": function(data, type, row, meta) {
+	                    return meta.row + 1;
+	                }
+	            },
+	            {
+	                "data": "applicationId",
+	                "title": "Loan ID"
+	            },
+	            {
+	                "data": "vehicleMake",
+	                "title": "Car Make"
+	            },
+	            {
+	                "data": "vehicleType",
+	                "title": "Car Model"
+	            },
+	            {
+	                "data": "emiAmount",
+	                "title": "EMI Amount"
+	            },
+	            {
+	                "data": "scheduledPaymentDate",
+	                "title": "Payment Date"
+	            },
+	            {
+	                "data": "paymentStatus",
+	                "title": "Actions",
+	                "render": function(data, type, row, meta) {
+	                    if (data === 'PENDING') {
+	                        return `<button class="btn btn-primary btn-custom" onclick="markAsPaid(${row.statusId})">Mark as Paid</button>`;
+	                    } else if (data === 'COMPLETED') {
+	                        return `<button class="btn btn-success btn-custom" disabled>Paid</button>`;
+	                    } else {
+	                        return '';
+	                    }
+	                }
+	            }
+	        ]
+	    });
+	});
+
+	function markAsPaid(statusId) {
+		$.ajax({
+			url: '/api/v1/emi-status',
+			type: 'PUT',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				statusId: statusId,
+				paymentStatus: 'COMPLETED'
+			}),
+			success: function(response) {
+				alert('EMI marked as paid!');
+				// Refresh DataTable or perform additional actions as needed
+				$('#installments_status_table').DataTable().ajax.reload();
+			},
+			error: function() {
+				alert('Failed to mark EMI as paid.');
+			}
+		});
+	}
+	</script>
+</body>
+</html>
